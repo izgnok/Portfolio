@@ -59,10 +59,6 @@ public class Project {
     @Builder.Default
     private Integer displayOrder = 0;
     
-    @Column(nullable = false, length = 1)
-    @Builder.Default
-    private String delYn = "N";
-    
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -147,15 +143,5 @@ public class Project {
     // 순서 변경
     public void updateDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
-    }
-    
-    // 프로젝트 삭제 (소프트 삭제)
-    public void delete() {
-        this.delYn = "Y";
-    }
-    
-    // 프로젝트 복구
-    public void restore() {
-        this.delYn = "N";
     }
 }

@@ -1,7 +1,7 @@
 package kong.portfolio.portfolio.dto;
 
 
-import kong.portfolio.portfolio.entity.Project;
+import kong.portfolio.portfolio.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,7 +39,13 @@ public class ProjectFullResponse {
     private List<SkillResponse> techStacks;
     private List<AchievementResponse> achievements;
 
-    public static ProjectFullResponse from(Project project) {
+// ProjectFullResponse.java에 추가
+
+    public static ProjectFullResponse from(Project project,
+                                           ProjectDetail detail,
+                                           List<ProjectImage> images,
+                                           List<ProjectTechStack> techStacks,
+                                           List<Achievement> achievements) {
         return ProjectFullResponse.builder()
                 .projectSeq(project.getProjectSeq())
                 .title(project.getTitle())
@@ -53,16 +59,17 @@ public class ProjectFullResponse {
                 .demoUrl(project.getDemoUrl())
                 .icon(project.getIcon())
                 .displayOrder(project.getDisplayOrder())
-                .detail(ProjectDetailResponse.from(project.getProjectDetail()))
-                .images(project.getProjectImages().stream()
+                .detail(detail != null ? ProjectDetailResponse.from(detail) : null)
+                .images(images.stream()
                         .map(ProjectImageResponse::from)
                         .collect(Collectors.toList()))
-                .techStacks(project.getProjectTechStacks().stream()
+                .techStacks(techStacks.stream()
                         .map(pts -> SkillResponse.from(pts.getSkill()))
                         .collect(Collectors.toList()))
-                .achievements(project.getAchievements().stream()
+                .achievements(achievements.stream()
                         .map(AchievementResponse::from)
                         .collect(Collectors.toList()))
                 .build();
     }
+
 }

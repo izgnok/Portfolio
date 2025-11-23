@@ -43,9 +43,6 @@ public class Award {
     @Column(nullable = false)
     private Integer displayOrder = 0;
 
-    @Column(nullable = false)
-    private Boolean deleted = false;
-
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -91,15 +88,5 @@ public class Award {
         if (displayOrder != null && displayOrder >= 0) {
             this.displayOrder = displayOrder;
         }
-    }
-
-    // Soft Delete
-    public void delete() {
-        this.deleted = true;
-    }
-
-    // 복구
-    public void restore() {
-        this.deleted = false;
     }
 }

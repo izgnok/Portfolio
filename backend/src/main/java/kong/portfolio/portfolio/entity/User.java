@@ -40,4 +40,9 @@ public class User {
     
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+    // User.java
+    public void changePassword(String newPassword) {
+        this.password = newPassword;
+    }
 }

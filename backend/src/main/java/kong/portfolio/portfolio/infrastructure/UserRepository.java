@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * 사용자 Repository
+ * 사용자 Repository (Hard Delete)
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -15,10 +15,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     /**
      * username으로 사용자 조회
      */
-    Optional<User> findByUsernameAndDeletedFalse(String username);
+    Optional<User> findByUsername(String username);
 
     /**
      * username 존재 여부 확인
      */
-    boolean existsByUsernameAndDeletedFalse(String username);
+    boolean existsByUsername(String username);
 }

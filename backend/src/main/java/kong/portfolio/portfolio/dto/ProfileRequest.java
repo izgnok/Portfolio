@@ -22,8 +22,13 @@ public class ProfileRequest {
     @NotBlank(message = "이름은 필수입니다.")
     private String name;
 
+    @NotBlank(message = "영문 이름은 필수입니다.")
+    private String nameEn;
+
     @NotNull(message = "생년월일은 필수입니다.")
     private LocalDate birthDate;
+
+    private String gender;
 
     @NotBlank(message = "전화번호는 필수입니다.")
     private String phone;
@@ -32,9 +37,9 @@ public class ProfileRequest {
     @Email(message = "올바른 이메일 형식이 아닙니다.")
     private String email;
 
-    private String githubUrl;
-    private String blogUrl;
-    private String linkedinUrl;
+    private String github;
+
+    private String subtitle;
+
     private String introduction;
-    private String shortBio;
 }
