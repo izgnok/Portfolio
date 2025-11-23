@@ -2,12 +2,8 @@ package kong.portfolio.portfolio.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "education")
@@ -15,59 +11,34 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@EntityListeners(AuditingEntityListener.class)
 public class Education {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long educationSeq;
-    
+    private Long id;
+
     @Column(nullable = false, length = 100)
-    private String institution;
-    
-    @Column(length = 100)
-    private String major;
-    
-    @Column(length = 50)
-    private String degree;
-    
-    @Column
-    private LocalDate startDate;
-    
-    @Column
-    private LocalDate endDate;
-    
-    @Column(length = 50)
-    private String gpa;
-    
-    @Column(columnDefinition = "TEXT")
-    private String description;
-    
+    private String name;
+
     @Column(nullable = false)
-    @Builder.Default
-    private Integer displayOrder = 0;
-    
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-    
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-    
-    // 학력 정보 수정
-    public void updateEducation(String institution, String major, String degree, 
-                               LocalDate startDate, LocalDate endDate, String gpa, String description) {
-        this.institution = institution;
-        this.major = major;
-        this.degree = degree;
+    private LocalDate startDate;
+
+    @Column(nullable = false)
+    private LocalDate endDate;
+
+    @Column(nullable = false, length = 20)
+    private String status;
+
+    @Column(length = 10)
+    private String gpa;
+
+    // 수정 메서드 추가
+    public void update(String name, LocalDate startDate, LocalDate endDate,
+                       String status, String gpa) {
+        this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status = status;
         this.gpa = gpa;
-        this.description = description;
-    }
-    
-    // 순서 변경
-    public void updateDisplayOrder(Integer displayOrder) {
-        this.displayOrder = displayOrder;
     }
 }

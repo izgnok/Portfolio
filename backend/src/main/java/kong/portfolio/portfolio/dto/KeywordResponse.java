@@ -6,23 +6,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * 키워드 응답 DTO
- */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class KeywordResponse {
-
-    private Long keywordSeq;
-    private String content;
+    
+    private Long id;
+    private String keyword;
     private Integer displayOrder;
-
+    
     public static KeywordResponse from(Keyword keyword) {
         return KeywordResponse.builder()
-                .keywordSeq(keyword.getKeywordSeq())
-                .content(keyword.getContent())
+                .id(keyword.getId())
+                .keyword(keyword.getKeyword())
                 .displayOrder(keyword.getDisplayOrder())
                 .build();
     }

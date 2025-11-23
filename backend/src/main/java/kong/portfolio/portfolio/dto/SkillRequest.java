@@ -5,29 +5,22 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * 기술스택 요청 DTO
- */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class SkillRequest {
-
-    @NotBlank(message = "기술명은 필수입니다.")
+    
+    @NotBlank(message = "스킬명을 입력해주세요")
     private String name;
-
-    private String category;
-    private String icon;
-
-    @NotNull(message = "기술 레벨은 필수입니다.")
-    @Min(value = 1, message = "기술 레벨은 1 이상이어야 합니다.")
-    @Max(value = 5, message = "기술 레벨은 5 이하여야 합니다.")
+    
+    @NotNull(message = "숙련도를 입력해주세요")
+    @Min(value = 0, message = "숙련도는 0 이상이어야 합니다")
+    @Max(value = 5, message = "숙련도는 5 이하여야 합니다")
     private Integer level;
-
-    private Integer displayOrder;
+    
+    @NotBlank(message = "카테고리를 입력해주세요")
+    private String category;  // 프론트엔드, 백엔드, CI/CD, DB, 기타
 }

@@ -6,48 +6,35 @@ import kong.portfolio.portfolio.application.ProfileService;
 import kong.portfolio.portfolio.dto.ProfileRequest;
 import kong.portfolio.portfolio.dto.ProfileResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.validation.Valid;
-
-@Slf4j
 @RestController
 @RequestMapping("/api/profile")
 @RequiredArgsConstructor
 public class ProfileController {
-
+    
     private final ProfileService profileService;
-
+    
+    /**
+     * 프로필 조회
+     */
     @GetMapping
     public ResponseEntity<ResponseDto> getProfile() {
-        ProfileResponse response = profileService.getProfile();
-        return ResponseDto.response(StatusCode.SUCCESS, response);
+        ProfileResponse profile = profileService.getProfile();
+        return ResponseDto.response(StatusCode.SUCCESS, profile);
     }
-
-    @PostMapping
-    public ResponseEntity<ResponseDto> createProfile(@Valid @RequestBody ProfileRequest request) {
-        ProfileResponse response = profileService.createProfile(request);
-        return ResponseDto.response(StatusCode.CREATED, response);
-    }
-
-    @PutMapping
-    public ResponseEntity<ResponseDto> updateProfile(@Valid @RequestBody ProfileRequest request) {
-        ProfileResponse response = profileService.updateProfile(request);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
-    }
-
-    @PostMapping("/image")
-    public ResponseEntity<ResponseDto> uploadProfileImage(@RequestParam("file") MultipartFile file) {
-        String imageUrl = profileService.uploadProfileImage(file);
-        return ResponseDto.response(StatusCode.SUCCESS, imageUrl);
-    }
-
-    @DeleteMapping("/image")
-    public ResponseEntity<ResponseDto> deleteProfileImage() {
-        profileService.deleteProfileImage();
-        return ResponseDto.response(StatusCode.SUCCESS, null);
+    
+    /**
+     * 프로필 저장/수정 (한 번에 처리)
+     */
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseDto> saveProfile(
+            @RequestPart("profile") ProfileRequest request,
+            @RequestPart(value = "profileImage", required = false) MultipartFile profileImage) {
+        ProfileResponse profile = profileService.saveProfile(request, profileImage);
+        return ResponseDto.response(StatusCode.SUCCESS, profile);
     }
 }

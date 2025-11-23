@@ -21,15 +21,11 @@ public class QProfile extends EntityPathBase<Profile> {
 
     public final DatePath<java.time.LocalDate> birthDate = createDate("birthDate", java.time.LocalDate.class);
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
     public final StringPath email = createString("email");
-
-    public final StringPath gender = createString("gender");
 
     public final StringPath github = createString("github");
 
-    public final StringPath introduction = createString("introduction");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final StringPath name = createString("name");
 
@@ -37,13 +33,9 @@ public class QProfile extends EntityPathBase<Profile> {
 
     public final StringPath phone = createString("phone");
 
-    public final StringPath profileImageUrl = createString("profileImageUrl");
+    public final ArrayPath<byte[], Byte> profileImage = createArray("profileImage", byte[].class);
 
-    public final NumberPath<Long> profileSeq = createNumber("profileSeq", Long.class);
-
-    public final StringPath subtitle = createString("subtitle");
-
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
+    public final StringPath profileImageType = createString("profileImageType");
 
     public QProfile(String variable) {
         super(Profile.class, forVariable(variable));

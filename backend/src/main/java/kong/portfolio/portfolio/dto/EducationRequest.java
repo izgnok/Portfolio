@@ -1,30 +1,29 @@
 package kong.portfolio.portfolio.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-/**
- * 학력 요청 DTO
- */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class EducationRequest {
-
-    @NotBlank(message = "기관명은 필수입니다.")
-    private String institution;
-
-    private String major;
-    private String degree;
+    
+    @NotBlank(message = "학교명/기관명을 입력해주세요")
+    private String name;
+    
+    @NotNull(message = "시작일을 입력해주세요")
     private LocalDate startDate;
+    
+    @NotNull(message = "종료일을 입력해주세요")
     private LocalDate endDate;
-    private String gpa;
-    private String description;
-    private Integer displayOrder;
+    
+    @NotBlank(message = "진행상태를 입력해주세요")
+    private String status;  // 졸업예정, 졸업, 이수중, 수료
+    
+    private String gpa;  // null 가능
 }

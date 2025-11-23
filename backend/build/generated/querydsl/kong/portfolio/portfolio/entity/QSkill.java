@@ -21,19 +21,11 @@ public class QSkill extends EntityPathBase<Skill> {
 
     public final StringPath category = createString("category");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
-    public final NumberPath<Integer> displayOrder = createNumber("displayOrder", Integer.class);
-
-    public final StringPath icon = createString("icon");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Integer> level = createNumber("level", Integer.class);
 
     public final StringPath name = createString("name");
-
-    public final NumberPath<Long> skillSeq = createNumber("skillSeq", Long.class);
-
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QSkill(String variable) {
         super(Skill.class, forVariable(variable));

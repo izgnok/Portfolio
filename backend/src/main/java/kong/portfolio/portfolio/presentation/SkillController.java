@@ -6,80 +6,54 @@ import kong.portfolio.portfolio.application.SkillService;
 import kong.portfolio.portfolio.dto.SkillRequest;
 import kong.portfolio.portfolio.dto.SkillResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/skills")
 @RequiredArgsConstructor
 public class SkillController {
-
+    
     private final SkillService skillService;
-
+    
+    /**
+     * 스킬 목록 조회 (카테고리별로 그룹화)
+     */
     @GetMapping
-    public ResponseEntity<ResponseDto> getAllSkills() {
-        List<SkillResponse> response = skillService.getAllSkills();
-        return ResponseDto.response(StatusCode.SUCCESS, response);
+    public ResponseEntity<ResponseDto> getSkills() {
+        List<SkillResponse> skills = skillService.getSkills();
+        return ResponseDto.response(StatusCode.SUCCESS, skills);
     }
-
-    @GetMapping("/category/{category}")
-    public ResponseEntity<ResponseDto> getSkillsByCategory(@PathVariable String category) {
-        List<SkillResponse> response = skillService.getSkillsByCategory(category);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
-    }
-
-    @GetMapping("/{skillSeq}")
-    public ResponseEntity<ResponseDto> getSkill(@PathVariable Long skillSeq) {
-        SkillResponse response = skillService.getSkill(skillSeq);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
-    }
-
+    
+    /**
+     * 스킬 저장
+     */
     @PostMapping
     public ResponseEntity<ResponseDto> createSkill(@Valid @RequestBody SkillRequest request) {
-        SkillResponse response = skillService.createSkill(request);
-        return ResponseDto.response(StatusCode.CREATED, response);
+        SkillResponse skill = skillService.createSkill(request);
+        return ResponseDto.response(StatusCode.SUCCESS, skill);
     }
-
-    @PutMapping("/{skillSeq}")
+    
+    /**
+     * 스킬 수정
+     */
+    @PutMapping("/{id}")
     public ResponseEntity<ResponseDto> updateSkill(
-            @PathVariable Long skillSeq,
+            @PathVariable Long id,
             @Valid @RequestBody SkillRequest request) {
-        SkillResponse response = skillService.updateSkill(skillSeq, request);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
+        SkillResponse skill = skillService.updateSkill(id, request);
+        return ResponseDto.response(StatusCode.SUCCESS, skill);
     }
-
-    @PatchMapping("/{skillSeq}/level")
-    public ResponseEntity<ResponseDto> updateSkillLevel(
-            @PathVariable Long skillSeq,
-            @RequestParam Integer level) {
-        skillService.updateSkillLevel(skillSeq, level);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
-    }
-
-    @DeleteMapping("/{skillSeq}")
-    public ResponseEntity<ResponseDto> deleteSkill(@PathVariable Long skillSeq) {
-        skillService.deleteSkill(skillSeq);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
-    }
-
-    @PatchMapping("/{skillSeq}/order")
-    public ResponseEntity<ResponseDto> updateSkillOrder(
-            @PathVariable Long skillSeq,
-            @RequestParam Integer newOrder) {
-        skillService.updateSkillOrder(skillSeq, newOrder);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
-    }
-
-    @PatchMapping("/category/{category}/order")
-    public ResponseEntity<ResponseDto> updateSkillsOrder(
-            @PathVariable String category,
-            @RequestBody List<Long> skillSeqs) {
-        skillService.updateSkillsOrder(category, skillSeqs);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
+    
+    /**
+     * 스킬 삭제
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDto> deleteSkill(@PathVariable Long id) {
+        skillService.deleteSkill(id);
+        return ResponseDto.response(StatusCode.SUCCESS, "스킬 삭제 완료");
     }
 }

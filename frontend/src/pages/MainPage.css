@@ -1,0 +1,510 @@
+.main-page {
+  min-height: 100vh;
+  padding-bottom: 60px;
+}
+
+/* 프로필 섹션 */
+.profile-section {
+  margin-bottom: 40px;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 30px;
+  padding: 60px 40px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid #667eea;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+}
+
+.profile-name {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.profile-name-en {
+  font-size: 18px;
+  color: #888;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.profile-title {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.profile-subtitle {
+  font-size: 16px;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+/* 프로필 연락처 정보 */
+.profile-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-icon {
+  font-size: 20px;
+  min-width: 30px;
+  text-align: center;
+}
+
+.contact-text {
+  color: #333;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.contact-link {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+.profile-links {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.profile-link {
+  padding: 10px 20px;
+  background: #f5f5f5;
+  border-radius: 25px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.profile-link:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.profile-bio {
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* 섹션 공통 */
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: white;
+  text-align: center;
+}
+
+/* 키워드 섹션 */
+.keywords-section {
+  margin-bottom: 40px;
+}
+
+.keywords-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.keyword-tag {
+  padding: 12px 24px;
+  background: white;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #667eea;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: default;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.keyword-tag::before {
+  content: '•';
+  margin-right: 8px;
+  font-size: 18px;
+  color: #764ba2;
+}
+
+.keyword-tag:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+  border-color: #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+}
+
+/* 카드 그리드 */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.card-subtitle {
+  font-size: 16px;
+  color: #667eea;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.card-detail {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.card-date {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.card-status {
+  font-size: 14px;
+  color: #667eea;
+  font-weight: 600;
+  background: rgba(102, 126, 234, 0.1);
+  padding: 4px 12px;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 8px 0;
+}
+
+.card-gpa {
+  font-size: 14px;
+  color: #764ba2;
+  font-weight: 600;
+  background: rgba(118, 75, 162, 0.1);
+  padding: 4px 12px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.award-rank {
+  display: inline-block;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #333;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+}
+
+.card-description {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+/* Education Section */
+.education-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.education-container .section-title {
+  color: #333;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.education-container .card {
+  border-left: 4px solid #667eea;
+}
+
+/* Certificates Section */
+.certificates-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.certificates-container .section-title {
+  color: #333;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.certificates-container .card {
+  border-left: 4px solid #4ecdc4;
+}
+
+/* 수상 프로젝트 섹션 */
+.awards-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.awards-container .section-title {
+  color: #333;
+  text-align: left;
+  margin-bottom: 30px;
+}
+
+.awards-container .card {
+  border-left: 4px solid #ffd700;
+}
+
+.award-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.award-badge {
+  font-size: 32px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+
+
+.award-name {
+  color: #f59e0b !important;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.card-organization {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* 기술스택 섹션 */
+.skills-section {
+  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.skills-category {
+  margin-bottom: 35px;
+}
+
+.skills-category:last-child {
+  margin-bottom: 0;
+}
+
+.category-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 15px;
+}
+
+.skill-card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #f0f0f5 100%);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.skill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+  background: linear-gradient(135deg, #e8ecff 0%, #dde1ff 100%);
+}
+
+.skill-icon {
+  font-size: 36px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.skill-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.skill-level {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+
+.level-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.level-dot.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
+
+/* CTA 섹션 */
+.cta-section {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.btn-large {
+  padding: 18px 50px;
+  font-size: 18px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+/* 애니메이션 지연 */
+.fade-in:nth-child(1) { animation-delay: 0.1s; }
+.fade-in:nth-child(2) { animation-delay: 0.2s; }
+.fade-in:nth-child(3) { animation-delay: 0.3s; }
+.fade-in:nth-child(4) { animation-delay: 0.4s; }
+.fade-in:nth-child(5) { animation-delay: 0.5s; }
+.fade-in:nth-child(6) { animation-delay: 0.6s; }
+.fade-in:nth-child(7) { animation-delay: 0.7s; }
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .profile-card {
+    padding: 40px 20px;
+  }
+
+  .profile-name {
+    font-size: 28px;
+  }
+
+  .profile-contact {
+    padding: 15px;
+  }
+
+  .contact-item {
+    padding: 10px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .keyword-tag {
+    font-size: 13px;
+    padding: 10px 18px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .btn-large {
+    padding: 15px 40px;
+    font-size: 16px;
+  }
+}

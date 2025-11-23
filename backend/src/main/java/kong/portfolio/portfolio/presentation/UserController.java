@@ -3,14 +3,13 @@ package kong.portfolio.portfolio.presentation;
 import kong.portfolio.common.response.ResponseDto;
 import kong.portfolio.common.status.StatusCode;
 import kong.portfolio.portfolio.application.UserService;
-import kong.portfolio.portfolio.dto.PasswordChangeRequest;
-import kong.portfolio.portfolio.dto.UserRequest;
-import kong.portfolio.portfolio.dto.UserResponse;
+import kong.portfolio.portfolio.dto.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Slf4j
@@ -21,29 +20,26 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{username}")
-    public ResponseEntity<ResponseDto> getUser(@PathVariable String username) {
-        UserResponse response = userService.getUser(username);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
+    /**
+     * 로그인 (세션 생성)
+     */
+    @PostMapping("/login")
+    public ResponseEntity<ResponseDto> login(
+            @Valid @RequestBody LoginRequest request,
+            HttpSession session) {
+        log.info("로그인 시도: {}", request.getUsername());
+        userService.login(request, session);
+        log.info("로그인 성공, 세션 ID: {}", session.getId());
+        return ResponseDto.response(StatusCode.SUCCESS, "로그인 성공");
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDto> createUser(@Valid @RequestBody UserRequest request) {
-        UserResponse response = userService.createUser(request);
-        return ResponseDto.response(StatusCode.CREATED, response);
-    }
-
-    @PatchMapping("/{username}/password")
-    public ResponseEntity<ResponseDto> changePassword(
-            @PathVariable String username,
-            @Valid @RequestBody PasswordChangeRequest request) {
-        userService.changePassword(username, request.getOldPassword(), request.getNewPassword());
-        return ResponseDto.response(StatusCode.SUCCESS, null);
-    }
-
-    @DeleteMapping("/{username}")
-    public ResponseEntity<ResponseDto> deleteUser(@PathVariable String username) {
-        userService.deleteUser(username);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
+    /**
+     * 로그아웃 (세션 무효화)
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<ResponseDto> logout(HttpSession session) {
+        session.invalidate();
+        log.info("로그아웃 및 세션 무효화 완료");
+        return ResponseDto.response(StatusCode.SUCCESS, "로그아웃 성공");
     }
 }

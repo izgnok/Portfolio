@@ -1,68 +1,33 @@
 package kong.portfolio.portfolio.entity;
 
-
 import jakarta.persistence.*;
-import kong.portfolio.common.exception.RestApiException;
-import kong.portfolio.common.status.StatusCode;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "skills")
+@Table(name = "skill")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@EntityListeners(AuditingEntityListener.class)
 public class Skill {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long skillSeq;
+    private Long id;
     
     @Column(nullable = false, length = 100)
-    private String name;
-    
-    @Column(length = 50)
-    private String category;
-    
-    @Column(length = 10)
-    private String icon;
+    private String name;  // 스킬명 (예: Spring Boot, React, MySQL)
     
     @Column(nullable = false)
-    @Builder.Default
-    private Integer level = 1;
+    private Integer level;  // 숙련도 0~5
     
-    @Column(nullable = false)
-    @Builder.Default
-    private Integer displayOrder = 0;
+    @Column(nullable = false, length = 50)
+    private String category;  // 프론트엔드, 백엔드, CI/CD, DB, 기타
     
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-    
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-    
-    // 스킬 정보 수정
-    public void updateSkill(String name, String category, String icon, Integer level) {
+    // 수정 메서드
+    public void update(String name, Integer level, String category) {
         this.name = name;
+        this.level = level;
         this.category = category;
-        this.icon = icon;
-        this.level = level;
-    }
-    
-    // 레벨만 변경
-    public void updateLevel(Integer level) {
-        this.level = level;
-    }
-    
-    // 순서 변경
-    public void updateDisplayOrder(Integer displayOrder) {
-        this.displayOrder = displayOrder;
     }
 }

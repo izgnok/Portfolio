@@ -19,15 +19,9 @@ public class QUser extends EntityPathBase<User> {
 
     public static final QUser user = new QUser("user");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
-    public final StringPath email = createString("email");
-
     public final StringPath password = createString("password");
 
     public final StringPath role = createString("role");
-
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public final StringPath username = createString("username");
 

@@ -5,15 +5,14 @@ import kong.portfolio.common.status.StatusCode;
 import kong.portfolio.portfolio.application.KeywordService;
 import kong.portfolio.portfolio.dto.KeywordRequest;
 import kong.portfolio.portfolio.dto.KeywordResponse;
+import kong.portfolio.portfolio.dto.KeywordOrderUpdateRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/keywords")
 @RequiredArgsConstructor
@@ -21,49 +20,40 @@ public class KeywordController {
 
     private final KeywordService keywordService;
 
+    /**
+     * 키워드 목록 조회
+     */
     @GetMapping
-    public ResponseEntity<ResponseDto> getAllKeywords() {
-        List<KeywordResponse> response = keywordService.getAllKeywords();
-        return ResponseDto.response(StatusCode.SUCCESS, response);
+    public ResponseEntity<ResponseDto> getKeywords() {
+        List<KeywordResponse> keywords = keywordService.getKeywords();
+        return ResponseDto.response(StatusCode.SUCCESS, keywords);
     }
 
-    @GetMapping("/{keywordSeq}")
-    public ResponseEntity<ResponseDto> getKeyword(@PathVariable Long keywordSeq) {
-        KeywordResponse response = keywordService.getKeyword(keywordSeq);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
-    }
-
+    /**
+     * 키워드 저장
+     */
     @PostMapping
     public ResponseEntity<ResponseDto> createKeyword(@Valid @RequestBody KeywordRequest request) {
-        KeywordResponse response = keywordService.createKeyword(request);
-        return ResponseDto.response(StatusCode.CREATED, response);
+        KeywordResponse keyword = keywordService.createKeyword(request);
+        return ResponseDto.response(StatusCode.SUCCESS, keyword);
     }
 
-    @PutMapping("/{keywordSeq}")
-    public ResponseEntity<ResponseDto> updateKeyword(
-            @PathVariable Long keywordSeq,
-            @Valid @RequestBody KeywordRequest request) {
-        KeywordResponse response = keywordService.updateKeyword(keywordSeq, request);
-        return ResponseDto.response(StatusCode.SUCCESS, response);
-    }
-
-    @DeleteMapping("/{keywordSeq}")
-    public ResponseEntity<ResponseDto> deleteKeyword(@PathVariable Long keywordSeq) {
-        keywordService.deleteKeyword(keywordSeq);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
-    }
-
-    @PatchMapping("/{keywordSeq}/order")
+    /**
+     * 키워드 순서 일괄 변경
+     */
+    @PutMapping("/order")
     public ResponseEntity<ResponseDto> updateKeywordOrder(
-            @PathVariable Long keywordSeq,
-            @RequestParam Integer newOrder) {
-        keywordService.updateKeywordOrder(keywordSeq, newOrder);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
+            @Valid @RequestBody KeywordOrderUpdateRequest request) {
+        keywordService.updateKeywordOrder(request);
+        return ResponseDto.response(StatusCode.SUCCESS, "키워드 순서 변경 완료");
     }
 
-    @PatchMapping("/order")
-    public ResponseEntity<ResponseDto> updateKeywordsOrder(@RequestBody List<Long> keywordSeqs) {
-        keywordService.updateKeywordsOrder(keywordSeqs);
-        return ResponseDto.response(StatusCode.SUCCESS, null);
+    /**
+     * 키워드 삭제
+     */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ResponseDto> deleteKeyword(@PathVariable Long id) {
+        keywordService.deleteKeyword(id);
+        return ResponseDto.response(StatusCode.SUCCESS, "키워드 삭제 완료");
     }
 }

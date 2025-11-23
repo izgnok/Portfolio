@@ -19,27 +19,17 @@ public class QEducation extends EntityPathBase<Education> {
 
     public static final QEducation education = new QEducation("education");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
-    public final StringPath degree = createString("degree");
-
-    public final StringPath description = createString("description");
-
-    public final NumberPath<Integer> displayOrder = createNumber("displayOrder", Integer.class);
-
-    public final NumberPath<Long> educationSeq = createNumber("educationSeq", Long.class);
-
     public final DatePath<java.time.LocalDate> endDate = createDate("endDate", java.time.LocalDate.class);
 
     public final StringPath gpa = createString("gpa");
 
-    public final StringPath institution = createString("institution");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath major = createString("major");
+    public final StringPath name = createString("name");
 
     public final DatePath<java.time.LocalDate> startDate = createDate("startDate", java.time.LocalDate.class);
 
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
+    public final StringPath status = createString("status");
 
     public QEducation(String variable) {
         super(Education.class, forVariable(variable));

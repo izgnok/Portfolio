@@ -7,41 +7,39 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Base64;
 
-/**
- * 프로필 응답 DTO
- */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ProfileResponse {
-
-    private Long profileSeq;
+    
+    private Long id;
     private String name;
     private String nameEn;
     private LocalDate birthDate;
-    private String gender;
     private String phone;
     private String email;
     private String github;
-    private String profileImageUrl;
-    private String subtitle;
-    private String introduction;
-
+    private String profileImage;  // Base64 인코딩된 이미지 (data:image/jpeg;base64,...)
+    
     public static ProfileResponse from(Profile profile) {
+        String imageData = null;
+        if (profile.getProfileImage() != null) {
+            String base64 = Base64.getEncoder().encodeToString(profile.getProfileImage());
+            imageData = "data:" + profile.getProfileImageType() + ";base64," + base64;
+        }
+        
         return ProfileResponse.builder()
-                .profileSeq(profile.getProfileSeq())
+                .id(profile.getId())
                 .name(profile.getName())
                 .nameEn(profile.getNameEn())
                 .birthDate(profile.getBirthDate())
-                .gender(profile.getGender())
                 .phone(profile.getPhone())
                 .email(profile.getEmail())
                 .github(profile.getGithub())
-                .profileImageUrl(profile.getProfileImageUrl())
-                .subtitle(profile.getSubtitle())
-                .introduction(profile.getIntroduction())
+                .profileImage(imageData)
                 .build();
     }
 }

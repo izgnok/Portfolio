@@ -18,65 +18,70 @@ public class QProject extends EntityPathBase<Project> {
 
     private static final long serialVersionUID = -1943259989L;
 
-    private static final PathInits INITS = PathInits.DIRECT2;
-
     public static final QProject project = new QProject("project");
 
-    public final ListPath<Achievement, QAchievement> achievements = this.<Achievement, QAchievement>createList("achievements", Achievement.class, QAchievement.class, PathInits.DIRECT2);
+    public final StringPath achievements = createString("achievements");
 
-    public final StringPath award = createString("award");
+    public final ArrayPath<byte[], Byte> architectureImage = createArray("architectureImage", byte[].class);
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    public final StringPath architectureImageType = createString("architectureImageType");
 
-    public final StringPath demoUrl = createString("demoUrl");
+    public final StringPath awardName = createString("awardName");
 
-    public final NumberPath<Integer> displayOrder = createNumber("displayOrder", Integer.class);
+    public final StringPath awardOrganization = createString("awardOrganization");
+
+    public final StringPath coreValues = createString("coreValues");
 
     public final DatePath<java.time.LocalDate> endDate = createDate("endDate", java.time.LocalDate.class);
 
-    public final StringPath githubUrl = createString("githubUrl");
+    public final BooleanPath hasAward = createBoolean("hasAward");
 
-    public final StringPath icon = createString("icon");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QProjectDetail projectDetail;
+    public final ListPath<ProjectImage, QProjectImage> images = this.<ProjectImage, QProjectImage>createList("images", ProjectImage.class, QProjectImage.class, PathInits.DIRECT2);
 
-    public final ListPath<ProjectImage, QProjectImage> projectImages = this.<ProjectImage, QProjectImage>createList("projectImages", ProjectImage.class, QProjectImage.class, PathInits.DIRECT2);
+    public final StringPath improvements = createString("improvements");
 
-    public final NumberPath<Long> projectSeq = createNumber("projectSeq", Long.class);
+    public final StringPath mainFeatures = createString("mainFeatures");
 
-    public final ListPath<ProjectTechStack, QProjectTechStack> projectTechStacks = this.<ProjectTechStack, QProjectTechStack>createList("projectTechStacks", ProjectTechStack.class, QProjectTechStack.class, PathInits.DIRECT2);
+    public final StringPath name = createString("name");
 
-    public final StringPath projectType = createString("projectType");
+    public final StringPath problemSolutions = createString("problemSolutions");
+
+    public final StringPath regrets = createString("regrets");
+
+    public final StringPath roles = createString("roles");
 
     public final DatePath<java.time.LocalDate> startDate = createDate("startDate", java.time.LocalDate.class);
 
-    public final StringPath subtitle = createString("subtitle");
+    public final StringPath status = createString("status");
+
+    public final StringPath summaries = createString("summaries");
 
     public final NumberPath<Integer> teamSize = createNumber("teamSize", Integer.class);
 
-    public final StringPath title = createString("title");
+    public final StringPath techBackend = createString("techBackend");
 
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
+    public final StringPath techCicd = createString("techCicd");
+
+    public final StringPath techDatabase = createString("techDatabase");
+
+    public final StringPath techExternalApi = createString("techExternalApi");
+
+    public final StringPath techFrontend = createString("techFrontend");
+
+    public final StringPath techIot = createString("techIot");
 
     public QProject(String variable) {
-        this(Project.class, forVariable(variable), INITS);
+        super(Project.class, forVariable(variable));
     }
 
     public QProject(Path<? extends Project> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        super(path.getType(), path.getMetadata());
     }
 
     public QProject(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
-    }
-
-    public QProject(PathMetadata metadata, PathInits inits) {
-        this(Project.class, metadata, inits);
-    }
-
-    public QProject(Class<? extends Project> type, PathMetadata metadata, PathInits inits) {
-        super(type, metadata, inits);
-        this.projectDetail = inits.isInitialized("projectDetail") ? new QProjectDetail(forProperty("projectDetail"), inits.get("projectDetail")) : null;
+        super(Project.class, metadata);
     }
 
 }

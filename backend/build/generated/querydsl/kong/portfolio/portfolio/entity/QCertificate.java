@@ -19,23 +19,13 @@ public class QCertificate extends EntityPathBase<Certificate> {
 
     public static final QCertificate certificate = new QCertificate("certificate");
 
-    public final NumberPath<Long> certificateSeq = createNumber("certificateSeq", Long.class);
-
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
-    public final StringPath credentialId = createString("credentialId");
-
-    public final StringPath description = createString("description");
-
-    public final NumberPath<Integer> displayOrder = createNumber("displayOrder", Integer.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final DatePath<java.time.LocalDate> issueDate = createDate("issueDate", java.time.LocalDate.class);
 
     public final StringPath issuer = createString("issuer");
 
     public final StringPath name = createString("name");
-
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
 
     public QCertificate(String variable) {
         super(Certificate.class, forVariable(variable));

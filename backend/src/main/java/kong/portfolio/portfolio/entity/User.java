@@ -27,22 +27,7 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
     
-    @Column(nullable = false, length = 100)
-    private String email;
-    
     @Column(length = 20)
     @Builder.Default
     private String role = "ADMIN";
-    
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-    
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
-
-    // User.java
-    public void changePassword(String newPassword) {
-        this.password = newPassword;
-    }
 }

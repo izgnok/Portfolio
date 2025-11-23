@@ -17,17 +17,13 @@ public class QKeyword extends EntityPathBase<Keyword> {
 
     private static final long serialVersionUID = 1846609787L;
 
-    public static final QKeyword keyword = new QKeyword("keyword");
-
-    public final StringPath content = createString("content");
-
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    public static final QKeyword keyword1 = new QKeyword("keyword1");
 
     public final NumberPath<Integer> displayOrder = createNumber("displayOrder", Integer.class);
 
-    public final NumberPath<Long> keywordSeq = createNumber("keywordSeq", Long.class);
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
+    public final StringPath keyword = createString("keyword");
 
     public QKeyword(String variable) {
         super(Keyword.class, forVariable(variable));

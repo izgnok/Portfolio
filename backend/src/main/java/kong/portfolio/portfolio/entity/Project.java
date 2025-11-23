@@ -1,35 +1,30 @@
 package kong.portfolio.portfolio.entity;
 
-
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "projects")
+@Table(name = "project")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@EntityListeners(AuditingEntityListener.class)
 public class Project {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long projectSeq;
+    private Long id;
     
-    @Column(nullable = false, length = 100)
-    private String title;
+    // 기본 정보
+    @Column(nullable = false, length = 200)
+    private String name;
     
-    @Column(length = 255)
-    private String subtitle;
+    @Column(nullable = false)
+    private Integer teamSize;
     
     @Column(nullable = false)
     private LocalDate startDate;
@@ -37,111 +32,123 @@ public class Project {
     @Column(nullable = false)
     private LocalDate endDate;
     
-    @Column
-    private Integer teamSize;
+    @Column(nullable = false, length = 20)
+    private String status;  // 진행중, 완료
     
-    @Column(length = 50)
-    private String projectType;
-    
-    @Column(length = 50)
-    private String award;
-    
-    @Column(length = 500)
-    private String githubUrl;
-    
-    @Column(length = 500)
-    private String demoUrl;
-    
-    @Column(length = 10)
-    private String icon;
-    
+    // 수상 정보
     @Column(nullable = false)
-    @Builder.Default
-    private Integer displayOrder = 0;
+    private Boolean hasAward;
     
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
+    @Column(length = 100)
+    private String awardName;
     
-    @LastModifiedDate
-    private LocalDateTime updatedAt;
+    @Column(length = 100)
+    private String awardOrganization;
     
-    // 프로젝트 상세 (1:1)
-    @OneToOne(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private ProjectDetail projectDetail;
+    // 시스템 아키텍처 이미지 (null 가능)
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] architectureImage;
     
-    // 프로젝트 이미지 (1:N)
+    @Column(length = 100)
+    private String architectureImageType;
+    
+    // JSON 데이터들
+    @Column(columnDefinition = "JSON")
+    private String summaries;  // ["요약1", "요약2"]
+    
+    @Column(columnDefinition = "JSON")
+    private String coreValues;  // ["핵심가치1", "핵심가치2"]
+    
+    @Column(columnDefinition = "JSON")
+    private String mainFeatures;  // ["주요기능1", "주요기능2"]
+    
+    @Column(columnDefinition = "JSON")
+    private String roles;  // ["역할1", "역할2"]
+    
+    // 기술스택 (카테고리별, null 가능)
+    @Column(columnDefinition = "JSON")
+    private String techDatabase;
+    
+    @Column(columnDefinition = "JSON")
+    private String techBackend;
+    
+    @Column(columnDefinition = "JSON")
+    private String techFrontend;
+    
+    @Column(columnDefinition = "JSON")
+    private String techIot;
+    
+    @Column(columnDefinition = "JSON")
+    private String techCicd;
+    
+    @Column(columnDefinition = "JSON")
+    private String techExternalApi;
+    
+    // 문제/해결 [{"problem": "문제1", "solution": "해결1"}] (null 가능)
+    @Column(columnDefinition = "JSON")
+    private String problemSolutions;
+    
+    // 성과 ["성과1", "성과2"] (null 가능)
+    @Column(columnDefinition = "JSON")
+    private String achievements;
+    
+    // 아쉬운점 ["아쉬운점1", "아쉬운점2"] (null 가능)
+    @Column(columnDefinition = "JSON")
+    private String regrets;
+    
+    // 개선방안 ["개선방안1", "개선방안2"] (null 가능)
+    @Column(columnDefinition = "JSON")
+    private String improvements;
+    
+    // 프로젝트 이미지들
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<ProjectImage> projectImages = new ArrayList<>();
+    private List<ProjectImage> images = new ArrayList<>();
     
-    // 프로젝트 기술스택 (N:M)
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<ProjectTechStack> projectTechStacks = new ArrayList<>();
-    
-    // 성과/문제해결 (1:N)
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<Achievement> achievements = new ArrayList<>();
-    
-    // 프로젝트 기본 정보 수정
-    public void updateProject(String title, String subtitle, LocalDate startDate, LocalDate endDate,
-                             Integer teamSize, String projectType, String award, 
-                             String githubUrl, String demoUrl, String icon) {
-        this.title = title;
-        this.subtitle = subtitle;
+    // 수정 메서드
+    public void update(String name, Integer teamSize, LocalDate startDate, LocalDate endDate,
+                      String status, Boolean hasAward, String awardName, String awardOrganization,
+                      String summaries, String coreValues, String mainFeatures, String roles,
+                      String techDatabase, String techBackend, String techFrontend,
+                      String techIot, String techCicd, String techExternalApi,
+                      String problemSolutions, String achievements, 
+                      String regrets, String improvements) {
+        this.name = name;
+        this.teamSize = teamSize;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.teamSize = teamSize;
-        this.projectType = projectType;
-        this.award = award;
-        this.githubUrl = githubUrl;
-        this.demoUrl = demoUrl;
-        this.icon = icon;
+        this.status = status;
+        this.hasAward = hasAward;
+        this.awardName = awardName;
+        this.awardOrganization = awardOrganization;
+        this.summaries = summaries;
+        this.coreValues = coreValues;
+        this.mainFeatures = mainFeatures;
+        this.roles = roles;
+        this.techDatabase = techDatabase;
+        this.techBackend = techBackend;
+        this.techFrontend = techFrontend;
+        this.techIot = techIot;
+        this.techCicd = techCicd;
+        this.techExternalApi = techExternalApi;
+        this.problemSolutions = problemSolutions;
+        this.achievements = achievements;
+        this.regrets = regrets;
+        this.improvements = improvements;
     }
     
-    // 프로젝트 상세 설정
-    public void setProjectDetail(ProjectDetail projectDetail) {
-        this.projectDetail = projectDetail;
-        projectDetail.setProject(this);
+    public void updateArchitectureImage(byte[] image, String imageType) {
+        this.architectureImage = image;
+        this.architectureImageType = imageType;
     }
     
-    // 이미지 추가
-    public void addProjectImage(ProjectImage projectImage) {
-        this.projectImages.add(projectImage);
-        projectImage.setProject(this);
+    public void addImage(ProjectImage image) {
+        this.images.add(image);
+        image.setProject(this);
     }
     
-    // 이미지 제거
-    public void removeProjectImage(ProjectImage projectImage) {
-        this.projectImages.remove(projectImage);
-    }
-    
-    // 기술스택 추가
-    public void addTechStack(ProjectTechStack projectTechStack) {
-        this.projectTechStacks.add(projectTechStack);
-        projectTechStack.setProject(this);
-    }
-    
-    // 기술스택 제거
-    public void removeTechStack(ProjectTechStack projectTechStack) {
-        this.projectTechStacks.remove(projectTechStack);
-    }
-    
-    // 성과 추가
-    public void addAchievement(Achievement achievement) {
-        this.achievements.add(achievement);
-        achievement.setProject(this);
-    }
-    
-    // 성과 제거
-    public void removeAchievement(Achievement achievement) {
-        this.achievements.remove(achievement);
-    }
-    
-    // 순서 변경
-    public void updateDisplayOrder(Integer displayOrder) {
-        this.displayOrder = displayOrder;
+    public void clearImages() {
+        this.images.clear();
     }
 }

@@ -2,18 +2,18 @@ package kong.portfolio.portfolio.infrastructure;
 
 import kong.portfolio.portfolio.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * 프로젝트 Repository (Hard Delete)
- */
-@Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     /**
-     * 모든 프로젝트 조회 (순서대로)
+     * 시작일 기준 최신순 조회
      */
-    List<Project> findAllByOrderByDisplayOrderAsc();
+    List<Project> findAllByOrderByStartDateDesc();
+
+    /**
+     * 수상작만 조회 (hasAward = true)
+     */
+    List<Project> findByHasAwardTrueOrderByStartDateDesc();
 }

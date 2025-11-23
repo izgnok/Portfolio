@@ -8,36 +8,27 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-/**
- * 학력 응답 DTO
- */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class EducationResponse {
-
-    private Long educationSeq;
-    private String institution;
-    private String major;
-    private String degree;
+    
+    private Long id;
+    private String name;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String status;
     private String gpa;
-    private String description;
-    private Integer displayOrder;
-
+    
     public static EducationResponse from(Education education) {
         return EducationResponse.builder()
-                .educationSeq(education.getEducationSeq())
-                .institution(education.getInstitution())
-                .major(education.getMajor())
-                .degree(education.getDegree())
+                .id(education.getId())
+                .name(education.getName())
                 .startDate(education.getStartDate())
                 .endDate(education.getEndDate())
+                .status(education.getStatus())
                 .gpa(education.getGpa())
-                .description(education.getDescription())
-                .displayOrder(education.getDisplayOrder())
                 .build();
     }
 }
