@@ -142,7 +142,7 @@ public class SkillService {
             
             // 카테고리 검증
             if (!category.equals(skill.getCategory())) {
-                throw new RestApiException(StatusCode.INVALID_INPUT_VALUE, 
+                throw new RestApiException(StatusCode.INVALID_INPUT_VALUE,
                         "다른 카테고리의 기술스택입니다: " + skill.getName());
             }
             

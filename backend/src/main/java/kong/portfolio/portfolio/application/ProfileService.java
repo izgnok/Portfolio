@@ -30,7 +30,7 @@ public class ProfileService {
     public ProfileResponse getProfile() {
         Profile profile = profileRepository.findFirstByOrderByProfileSeqAsc()
                 .orElseThrow(() -> new RestApiException(StatusCode.PROFILE_NOT_FOUND));
-        
+
         return ProfileResponse.from(profile);
     }
 
@@ -58,7 +58,7 @@ public class ProfileService {
 
         Profile savedProfile = profileRepository.save(profile);
         log.info("프로필 생성 완료: {}", savedProfile.getProfileSeq());
-        
+
         return ProfileResponse.from(savedProfile);
     }
 
@@ -99,7 +99,7 @@ public class ProfileService {
         String imageUrl = "/uploads/profile/" + file.getOriginalFilename(); // 임시
 
         profile.updateProfileImage(imageUrl);
-        
+
         log.info("프로필 이미지 업로드 완료: {}", imageUrl);
         return imageUrl;
     }
@@ -117,7 +117,7 @@ public class ProfileService {
 
         // TODO: 실제 파일 삭제
         // fileService.deleteFile(oldImageUrl);
-        
+
         log.info("프로필 이미지 삭제 완료: {}", oldImageUrl);
     }
 }

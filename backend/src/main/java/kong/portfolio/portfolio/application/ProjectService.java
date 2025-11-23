@@ -202,10 +202,10 @@ public class ProjectService {
         Skill skill = skillRepository.findById(skillSeq)
                 .orElseThrow(() -> new RestApiException(StatusCode.SKILL_NOT_FOUND));
 
-        // 이미 연결되어 있는지 확인
-        if (projectTechStackRepository.existsByProject_ProjectSeqAndSkill_SkillSeq(projectSeq, skillSeq)) {
-            throw new RestApiException(StatusCode.PROJECT_TECH_STACK_ALREADY_EXISTS);
-        }
+//        // 이미 연결되어 있는지 확인
+//        if (projectTechStackRepository.existsByProject_ProjectSeqAndSkill_SkillSeq(projectSeq, skillSeq)) {
+//            throw new RestApiException(StatusCode.PROJECT_TECH_STACK_ALREADY_EXISTS);
+//        }
 
         ProjectTechStack projectTechStack = ProjectTechStack.builder()
                 .project(project)

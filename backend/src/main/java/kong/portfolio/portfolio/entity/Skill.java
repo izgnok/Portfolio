@@ -58,9 +58,6 @@ public class Skill {
     
     // 레벨만 변경
     public void updateLevel(Integer level) {
-        if (level == null || level < 1 || level > 5) {
-            throw new RestApiException(StatusCode.INVALID_INPUT_VALUE, "레벨은 1~5 사이여야 합니다.");
-        }
         this.level = level;
     }
     

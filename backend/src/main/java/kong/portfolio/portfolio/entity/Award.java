@@ -34,7 +34,7 @@ public class Award {
     @Column(nullable = false)
     private LocalDate awardDate;
 
-    @Column(length = 50)
+    @Column(name = "award_rank", length = 50)  // ← 수정: rank → award_rank
     private String rank;
 
     @Column(columnDefinition = "TEXT")
