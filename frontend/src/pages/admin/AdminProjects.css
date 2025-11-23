@@ -121,6 +121,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 70px;
 }
 
 .project-item .btn-delete:hover {
@@ -192,6 +193,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 70px;
 }
 
 .btn-edit {

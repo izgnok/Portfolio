@@ -392,7 +392,7 @@ function AdminProjects() {
                       handleDelete(project.projectSeq);
                     }}
                   >
-                    삭제
+                    Delete
                   </button>
                 </div>
               ))
