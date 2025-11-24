@@ -1,7 +1,6 @@
 package kong.portfolio.portfolio.dto;
 
 import kong.portfolio.portfolio.entity.Project;
-import kong.portfolio.portfolio.entity.ProjectImage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +24,7 @@ public class ProjectDetailResponse {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
+    private String githubUrl;
     
     // 수상 정보
     private Boolean hasAward;
@@ -97,6 +97,7 @@ public class ProjectDetailResponse {
                 .startDate(project.getStartDate())
                 .endDate(project.getEndDate())
                 .status(project.getStatus())
+                .githubUrl(project.getGithubUrl())
                 .hasAward(project.getHasAward())
                 .awardName(project.getAwardName())
                 .awardOrganization(project.getAwardOrganization())

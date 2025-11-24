@@ -19,7 +19,6 @@ function ProjectDetail() {
   const loadProject = async () => {
     try {
       const response = await projectsAPI.getById(id);
-      console.log('Project Detail Response:', response.data);
       setProject(response.data);
     } catch (error) {
       console.error('프로젝트 로딩 실패:', error);
@@ -43,17 +42,19 @@ function ProjectDetail() {
   };
 
   const nextImage = () => {
-    if (project?.images && project.images.length > 0) {
+    const projectImages = project?.projectImages || [];
+    if (projectImages && projectImages.length > 0) {
       setCurrentImageIndex((prev) =>
-        prev === project.images.length - 1 ? 0 : prev + 1
+        prev === projectImages.length - 1 ? 0 : prev + 1
       );
     }
   };
 
   const prevImage = () => {
-    if (project?.images && project.images.length > 0) {
+    const projectImages = project?.projectImages || [];
+    if (projectImages && projectImages.length > 0) {
       setCurrentImageIndex((prev) =>
-        prev === 0 ? project.images.length - 1 : prev - 1
+        prev === 0 ? projectImages.length - 1 : prev - 1
       );
     }
   };
@@ -85,6 +86,9 @@ function ProjectDetail() {
   const achievements = parseJsonField(project.achievements);
   const regrets = parseJsonField(project.regrets);
   const improvements = parseJsonField(project.improvements);
+  
+  // 프로젝트 이미지 (백엔드에서 projectImages로 옴)
+  const projectImages = project.projectImages || [];
 
   // 기술스택 필드 파싱
   const techDatabase = parseJsonField(project.techDatabase);
@@ -125,10 +129,10 @@ function ProjectDetail() {
         </section>
 
         {/* 이미지 갤러리 */}
-        {project.images && project.images.length > 0 && (
+        {projectImages && projectImages.length > 0 && (
           <section className="image-gallery fade-in">
             <div className="gallery-main">
-              {project.images.length > 1 && (
+              {projectImages.length > 1 && (
                 <>
                   <button className="gallery-button prev" onClick={prevImage}>
                     ‹
@@ -139,17 +143,17 @@ function ProjectDetail() {
                 </>
               )}
               <img
-                src={project.images[currentImageIndex].image}
+                src={projectImages[currentImageIndex]?.imageData}
                 alt={`Project ${currentImageIndex + 1}`}
                 className="gallery-image"
               />
             </div>
-            {project.images.length > 1 && (
+            {projectImages.length > 1 && (
               <div className="gallery-thumbnails">
-                {project.images.map((image, index) => (
+                {projectImages.map((image, index) => (
                   <img
-                    key={image.imageSeq}
-                    src={image.image}
+                    key={image.id || index}
+                    src={image.imageData}
                     alt={`Thumbnail ${index + 1}`}
                     className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
                     onClick={() => setCurrentImageIndex(index)}
@@ -176,19 +180,11 @@ function ProjectDetail() {
                 <p>{project.teamSize}명</p>
               </div>
             )}
-            {project.projectUrl && (
-              <div className="info-card">
-                <h3>🔗 프로젝트 URL</h3>
-                <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" className="project-link">
-                  바로가기 →
-                </a>
-              </div>
-            )}
             {project.githubUrl && (
               <div className="info-card">
                 <h3>💻 GitHub</h3>
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
-                  저장소 →
+                  {project.githubUrl}
                 </a>
               </div>
             )}
@@ -254,14 +250,13 @@ function ProjectDetail() {
         {/* 성과 및 문제해결 */}
         {(achievements.length > 0 || problemSolutions.length > 0) && (
           <section className="achievements-problems-section fade-in">
-            <h2 className="main-section-title">🏆 성과 및 문제해결</h2>
             <div className="two-column-grid">
-              {/* 좌측: 성과 및 결과물 */}
+              {/* 좌측: 성과 */}
               {achievements.length > 0 && (
                 <div className="column-card achievements-card">
                   <div className="column-header">
                     <div className="column-icon">🏆</div>
-                    <h3 className="column-title">성과 및 결과물</h3>
+                    <h3 className="column-title">성과</h3>
                   </div>
                   <div className="achievement-items">
                     {achievements.map((achievement, index) => (
@@ -274,12 +269,12 @@ function ProjectDetail() {
                 </div>
               )}
 
-              {/* 우측: DB 구조 최적화 (문제 해결) */}
+              {/* 우측: 문제해결 */}
               {problemSolutions.length > 0 && (
                 <div className="column-card problems-card">
                   <div className="column-header">
                     <div className="column-icon">🔧</div>
-                    <h3 className="column-title">DB 구조 최적화</h3>
+                    <h3 className="column-title">문제해결</h3>
                   </div>
                   <div className="problem-solution-items">
                     {problemSolutions.map((item, index) => (
@@ -304,7 +299,6 @@ function ProjectDetail() {
         {/* 아쉬운 점 및 개선 방안 */}
         {(regrets.length > 0 || improvements.length > 0) && (
           <section className="regrets-improvements-section fade-in">
-            <h2 className="main-section-title">⚠️ 아쉬운 점 및 개선 방안</h2>
             <div className="two-column-grid">
               {/* 좌측: 아쉬운 점 */}
               {regrets.length > 0 && (
@@ -366,11 +360,11 @@ function ProjectDetail() {
           <div className="section-card">
             <h2 className="section-title">💻 기술스택</h2>
             
-            {techDatabase.length > 0 && (
+            {techFrontend.length > 0 && (
               <div className="tech-category">
-                <h3 className="tech-category-title">🗄️ Database</h3>
+                <h3 className="tech-category-title">🎨 Frontend</h3>
                 <div className="tech-tags">
-                  {techDatabase.map((tech, index) => (
+                  {techFrontend.map((tech, index) => (
                     <span key={index} className="tech-tag">{tech}</span>
                   ))}
                 </div>
@@ -388,11 +382,11 @@ function ProjectDetail() {
               </div>
             )}
 
-            {techFrontend.length > 0 && (
+            {techDatabase.length > 0 && (
               <div className="tech-category">
-                <h3 className="tech-category-title">🎨 Frontend</h3>
+                <h3 className="tech-category-title">🗄️ Database</h3>
                 <div className="tech-tags">
-                  {techFrontend.map((tech, index) => (
+                  {techDatabase.map((tech, index) => (
                     <span key={index} className="tech-tag">{tech}</span>
                   ))}
                 </div>

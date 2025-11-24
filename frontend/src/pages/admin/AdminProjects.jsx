@@ -74,7 +74,7 @@ function AdminProjects() {
       const response = await projectsAPI.getAll();
       setProjects(response.data);
     } catch (error) {
-      console.error('프로젝트 목록 로딩 실패:', error);
+      console.error('Failed to load projects:', error);
     } finally {
       setLoading(false);
     }
@@ -129,16 +129,26 @@ function AdminProjects() {
       });
 
       // 기존 이미지들을 미리보기로 설정
-      if (project.images && project.images.length > 0) {
-        setProjectImagePreviews(project.images.map(img => img.image));
+      const images = project.projectImages || project.images || [];
+      if (images.length > 0) {
+        setProjectImagePreviews(images.map(img => img.imageData || img.image));
+      } else {
+        setProjectImagePreviews([]);
       }
+      
       if (project.architectureImage) {
         setArchitectureImagePreview(project.architectureImage);
+      } else {
+        setArchitectureImagePreview(null);
       }
+      
+      // 이미지 파일 상태 초기화
+      setProjectImageFiles([]);
+      setArchitectureImageFile(null);
 
     } catch (error) {
-      console.error('프로젝트 로딩 실패:', error);
-      showMessage('error', '프로젝트를 불러올 수 없습니다.');
+      console.error('Failed to load project:', error);
+      showMessage('error', 'Failed to load project.');
     }
   };
 
@@ -253,7 +263,22 @@ function AdminProjects() {
     e.preventDefault();
     
     if (!formData.title.trim()) {
-      showMessage('error', '프로젝트 제목은 필수입니다.');
+      showMessage('error', 'Project title is required.');
+      return;
+    }
+    
+    if (!formData.teamSize) {
+      showMessage('error', 'Team size is required.');
+      return;
+    }
+    
+    if (!formData.startDate) {
+      showMessage('error', 'Start date is required.');
+      return;
+    }
+    
+    if (!formData.endDate) {
+      showMessage('error', 'End date is required.');
       return;
     }
 
@@ -262,13 +287,11 @@ function AdminProjects() {
       // ProjectRequest DTO에 맞춰 데이터 준비
       const projectData = {
         name: formData.title,  // 백엔드 Entity 필드명은 'name'
-        subtitle: formData.subtitle || null,
-        status: formData.status,
-        startDate: formData.startDate,
-        endDate: formData.endDate || null,
-        teamSize: formData.teamSize ? parseInt(formData.teamSize) : null,
-        projectUrl: formData.projectUrl || null,
+        teamSize: parseInt(formData.teamSize),  // 필수 필드
         githubUrl: formData.githubUrl || null,
+        startDate: formData.startDate,
+        endDate: formData.endDate,  // 필수 필드
+        status: formData.status,
         hasAward: formData.hasAward,
         awardName: formData.awardName || null,
         awardOrganization: formData.awardOrganization || null,
@@ -289,16 +312,18 @@ function AdminProjects() {
         techExternalApi: JSON.stringify(formData.techExternalApi),
       };
 
-      if (selectedProject?.projectSeq) {
+      const projectId = selectedProject?.id || selectedProject?.projectSeq;
+      
+      if (projectId) {
         // 수정
         await projectsAPI.update(
-          selectedProject.projectSeq,
+          projectId,
           projectData,
-          projectImageFiles.length > 0 ? projectImageFiles : null,
-          architectureImageFile
+          projectImageFiles.length > 0 ? projectImageFiles : undefined,
+          architectureImageFile || undefined
         );
-        showMessage('success', '프로젝트가 수정되었습니다!');
-        await loadProject(selectedProject.projectSeq);
+        showMessage('success', 'Project updated successfully!');
+        await loadProject(projectId);
       } else {
         // 생성
         const response = await projectsAPI.create(
@@ -306,32 +331,34 @@ function AdminProjects() {
           projectImageFiles,
           architectureImageFile
         );
-        showMessage('success', '프로젝트가 생성되었습니다!');
-        navigate(`/admin/projects/${response.data.projectSeq}`);
+        showMessage('success', 'Project created successfully!');
+        const newProjectId = response.data.id || response.data.projectSeq;
+        navigate(`/admin/projects/${newProjectId}`);
       }
       
       await loadData();
     } catch (error) {
-      console.error('프로젝트 저장 실패:', error);
-      showMessage('error', '저장 실패: ' + (error.response?.data?.message || error.message));
+      console.error('Failed to save project:', error);
+      showMessage('error', 'Save failed: ' + (error.response?.data?.message || error.message));
     } finally {
       setSaving(false);
     }
   };
 
-  const handleDelete = async (projectSeq) => {
-    if (!window.confirm('이 프로젝트를 삭제하시겠습니까?')) return;
+  const handleDelete = async (projectId) => {
+    if (!window.confirm('Are you sure you want to delete this project?')) return;
 
     try {
-      await projectsAPI.delete(projectSeq);
-      showMessage('success', '프로젝트가 삭제되었습니다!');
+      await projectsAPI.delete(projectId);
+      showMessage('success', 'Project deleted successfully!');
       await loadData();
-      if (projectSeq === selectedProject?.projectSeq) {
+      const currentProjectId = selectedProject?.id || selectedProject?.projectSeq;
+      if (projectId === currentProjectId) {
         navigate('/admin/projects');
         setSelectedProject(null);
       }
     } catch (error) {
-      showMessage('error', '삭제 실패: ' + error.message);
+      showMessage('error', 'Delete failed: ' + error.message);
     }
   };
 
@@ -350,8 +377,8 @@ function AdminProjects() {
       
       <div className="container">
         <section className="admin-header fade-in">
-          <h1 className="admin-title">🚀 프로젝트 관리</h1>
-          <p className="admin-subtitle">프로젝트를 추가하고 관리하세요</p>
+          <h1 className="admin-title">🚀 Projects Management</h1>
+          <p className="admin-subtitle">Manage your projects</p>
         </section>
 
         {message.text && (
@@ -362,25 +389,28 @@ function AdminProjects() {
 
         <section className="projects-section fade-in">
           <div className="section-header">
-            <h2>프로젝트 목록</h2>
+            <h2>Projects List</h2>
             <button className="btn" onClick={() => navigate('/admin/projects/new')}>
-              + 새 프로젝트
+              + New Project
             </button>
           </div>
           
           <div className="projects-list">
             {projects.length === 0 ? (
-              <p className="no-data">프로젝트가 없습니다.</p>
+              <p className="no-data">No projects available.</p>
             ) : (
               projects.map((project) => (
                 <div
-                  key={project.projectSeq}
-                  className={`project-item ${selectedProject?.projectSeq === project.projectSeq ? 'active' : ''}`}
-                  onClick={() => navigate(`/admin/projects/${project.projectSeq}`)}
+                  key={project.id || project.projectSeq}
+                  className={`project-item ${
+                    (selectedProject?.id && selectedProject.id === project.id) || 
+                    (selectedProject?.projectSeq && selectedProject.projectSeq === project.projectSeq) 
+                    ? 'active' : ''
+                  }`}
+                  onClick={() => navigate(`/admin/projects/${project.id || project.projectSeq}`)}
                 >
                   <div className="project-item-content">
                     <h4>{project.name || project.title}</h4>
-                    <p>{project.subtitle || '설명 없음'}</p>
                     {project.hasAward && (
                       <span className="award-badge">🏆 {project.awardName}</span>
                     )}
@@ -389,7 +419,7 @@ function AdminProjects() {
                     className="btn-delete"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDelete(project.projectSeq);
+                      handleDelete(project.id || project.projectSeq);
                     }}
                   >
                     Delete
@@ -447,32 +477,21 @@ function AdminProjects() {
                   </div>
 
                   <div className="form-group">
-                    <label>부제목</label>
-                    <input
-                      type="text"
-                      name="subtitle"
-                      value={formData.subtitle}
-                      onChange={handleInputChange}
-                      placeholder="React 기반 개인 포트폴리오"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>프로젝트 상태 *</label>
+                    <label>Project Status *</label>
                     <select
                       name="status"
                       value={formData.status}
                       onChange={handleInputChange}
                       required
                     >
-                      <option value="진행중">진행중</option>
-                      <option value="완료">완료</option>
+                      <option value="진행중">In Progress</option>
+                      <option value="완료">Completed</option>
                     </select>
                   </div>
 
                   <div className="form-row">
                     <div className="form-group">
-                      <label>시작일 *</label>
+                      <label>Start Date *</label>
                       <input
                         type="date"
                         name="startDate"
@@ -482,18 +501,19 @@ function AdminProjects() {
                       />
                     </div>
                     <div className="form-group">
-                      <label>종료일</label>
+                      <label>End Date *</label>
                       <input
                         type="date"
                         name="endDate"
                         value={formData.endDate}
                         onChange={handleInputChange}
+                        required
                       />
                     </div>
                   </div>
 
                   <div className="form-group">
-                    <label>팀 인원</label>
+                    <label>Team Size *</label>
                     <input
                       type="number"
                       name="teamSize"
@@ -501,17 +521,7 @@ function AdminProjects() {
                       onChange={handleInputChange}
                       placeholder="4"
                       min="1"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label>프로젝트 URL</label>
-                    <input
-                      type="url"
-                      name="projectUrl"
-                      value={formData.projectUrl}
-                      onChange={handleInputChange}
-                      placeholder="https://example.com"
+                      required
                     />
                   </div>
 
@@ -534,30 +544,30 @@ function AdminProjects() {
                         checked={formData.hasAward}
                         onChange={handleInputChange}
                       />
-                      수상 경력 있음
+                      Has Award
                     </label>
                   </div>
 
                   {formData.hasAward && (
                     <>
                       <div className="form-group">
-                        <label>수상명</label>
+                        <label>Award Name</label>
                         <input
                           type="text"
                           name="awardName"
                           value={formData.awardName}
                           onChange={handleInputChange}
-                          placeholder="최우수상"
+                          placeholder="Best Prize"
                         />
                       </div>
                       <div className="form-group">
-                        <label>수상 기관</label>
+                        <label>Award Organization</label>
                         <input
                           type="text"
                           name="awardOrganization"
                           value={formData.awardOrganization}
                           onChange={handleInputChange}
-                          placeholder="OO대학교"
+                          placeholder="University Name"
                         />
                       </div>
                     </>

@@ -34,6 +34,8 @@ public class QProject extends EntityPathBase<Project> {
 
     public final DatePath<java.time.LocalDate> endDate = createDate("endDate", java.time.LocalDate.class);
 
+    public final StringPath githubUrl = createString("githubUrl");
+
     public final BooleanPath hasAward = createBoolean("hasAward");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);

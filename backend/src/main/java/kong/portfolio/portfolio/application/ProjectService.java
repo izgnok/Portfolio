@@ -58,6 +58,7 @@ public class ProjectService {
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .status(request.getStatus())
+                .githubUrl(request.getGithubUrl())
                 .hasAward(request.getHasAward())
                 .awardName(request.getAwardName())
                 .awardOrganization(request.getAwardOrganization())
@@ -133,6 +134,7 @@ public class ProjectService {
             request.getStartDate(),
             request.getEndDate(),
             request.getStatus(),
+            request.getGithubUrl(),
             request.getHasAward(),
             request.getAwardName(),
             request.getAwardOrganization(),

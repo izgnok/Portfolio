@@ -150,35 +150,42 @@
   margin-left: auto;
 }
 
-.btn-edit,
-.btn-delete {
-  padding: 8px 20px;
+.skill-actions .btn-edit,
+.skill-actions .btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  height: 40px;
   border: none;
-  border-radius: 10px;
-  font-size: 13px;
+  border-radius: 4px !important;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 70px;
+  min-width: 85px;
+  white-space: nowrap;
+  box-sizing: border-box;
 }
 
-.btn-edit {
+.skill-actions .btn-edit {
   background: #667eea;
   color: white;
 }
 
-.btn-edit:hover {
+.skill-actions .btn-edit:hover {
   background: #5568d3;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-.btn-delete {
+.skill-actions .btn-delete {
   background: #dc3545;
   color: white;
 }
 
-.btn-delete:hover {
+.skill-actions .btn-delete:hover {
   background: #c82333;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);

@@ -18,6 +18,8 @@ public class ProjectRequest {
     
     @NotNull(message = "팀인원을 입력해주세요")
     private Integer teamSize;
+
+    private String githubUrl;
     
     @NotNull(message = "시작일을 입력해주세요")
     private LocalDate startDate;
