@@ -7,7 +7,7 @@ Spring Boot 3.2.0 기반으로 RESTful API를 제공하며, JWT 인증을 통한
 ## 🛠 기술 스택
 - **Java**: 17
 - **Spring Boot**: 3.2.0
-- **Spring Security**: JWT 기반 인증
+- **Spring Security**
 - **Spring Data JPA**: ORM
 - **MySQL**: 8.0
 - **Maven**: 빌드 도구
