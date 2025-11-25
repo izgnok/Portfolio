@@ -36,6 +36,7 @@ public class CertificateService {
         Certificate certificate = Certificate.builder()
                 .name(request.getName())
                 .issuer(request.getIssuer())
+                .certificateNumber(request.getCertificateNumber())
                 .issueDate(request.getIssueDate())
                 .build();
 
