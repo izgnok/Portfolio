@@ -242,10 +242,6 @@ spring:
       ddl-auto: update  # 또는 create, validate
 ```
 
-### JWT 토큰 만료
-**증상**: 401 Unauthorized
-**해결**: `/api/auth/refresh`로 토큰 갱신
-
 ### 파일 업로드 실패
 **증상**: 413 Request Entity Too Large
 **해결**: Nginx 설정 확인
@@ -315,13 +311,6 @@ curl http://localhost:8080/actuator/health
     <dependency>
         <groupId>com.mysql</groupId>
         <artifactId>mysql-connector-j</artifactId>
-    </dependency>
-    
-    <!-- JWT -->
-    <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt-api</artifactId>
-        <version>0.11.5</version>
     </dependency>
 </dependencies>
 ```
