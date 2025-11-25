@@ -19,7 +19,7 @@ function ProjectsList() {
       const response = await projectsAPI.getAll();
       setProjects(response.data);
     } catch (error) {
-      console.error('프로젝트 로딩 실패:', error);
+      // Error silently handled
     } finally {
       setLoading(false);
     }

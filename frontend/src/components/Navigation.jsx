@@ -20,14 +20,12 @@ function Navigation({ isAdmin = false }) {
       navigate('/admin');
     } else {
       // 로그인되지 않은 경우에만 모달 표시
-      console.log('Opening login modal');
       setShowLoginModal(true);
     }
   }, [isAuthenticated, navigate]);
 
   // 로그인 성공 핸들러
   const handleLogin = useCallback(() => {
-    console.log('Login successful - navigating to control panel');
     setShowLoginModal(false);
     navigate('/admin');
   }, [navigate]);
@@ -38,9 +36,8 @@ function Navigation({ isAdmin = false }) {
       try {
         // 백엔드 POST /api/users/logout 호출 (세션 무효화)
         await authAPI.logout();
-        console.log('Logout successful - session invalidated');
       } catch (error) {
-        console.error('Logout error:', error);
+        // Logout error handled silently
       } finally {
         // 로컬 스토리지 정리
         localStorage.removeItem('isAdmin');

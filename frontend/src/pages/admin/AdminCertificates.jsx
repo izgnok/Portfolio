@@ -27,7 +27,6 @@ function AdminCertificates() {
       });
       setCertificates(sorted);
     } catch (error) {
-      console.error('Failed to load certificates:', error);
       showMessage('error', 'Failed to load certificates');
     } finally {
       setLoading(false);
@@ -62,7 +61,7 @@ function AdminCertificates() {
         name: data.name,
         issuer: data.issuer,
         issueDate: data.issueDate,
-        certificateNumber: data.certificateNumber || null
+        certificateNumber: data.certificateNumber?.trim() || null
       };
 
       if (editingCertificate) {

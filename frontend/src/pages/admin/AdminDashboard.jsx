@@ -24,7 +24,7 @@ function AdminDashboard() {
       setProjects(projectsData.data);
       setSkills(skillsData.data);
     } catch (error) {
-      console.error('Failed to load data:', error);
+      // Error silently handled
     } finally {
       setLoading(false);
     }

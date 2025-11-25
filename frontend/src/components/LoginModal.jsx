@@ -21,12 +21,8 @@ function LoginModal({ isOpen, onClose, onLogin }) {
     setError('');
 
     try {
-      console.log('로그인 시도:', data.username);
-      
       // 백엔드 POST /api/users/login 호출 (세션 생성)
       const response = await authAPI.login(data);
-      
-      console.log('로그인 응답:', response);
       
       // 백엔드 ResponseDto 구조: { data: UserResponse, message, ... }
       // 세션이 백엔드에서 생성되고, JSESSIONID 쿠키가 자동으로 설정됨
@@ -34,7 +30,6 @@ function LoginModal({ isOpen, onClose, onLogin }) {
         // localStorage에 관리자 상태와 사용자 정보 저장
         localStorage.setItem('isAdmin', 'true');
         localStorage.setItem('userInfo', JSON.stringify(response.data));
-        console.log('로그인 성공 - 세션 생성됨:', response.data);
         
         onLogin();
         onClose();
@@ -42,7 +37,6 @@ function LoginModal({ isOpen, onClose, onLogin }) {
         setError('로그인에 실패했습니다. 응답 데이터가 없습니다.');
       }
     } catch (err) {
-      console.error('로그인 에러:', err);
       setError(err.message || '아이디 또는 비밀번호가 올바르지 않습니다.');
     } finally {
       setLoading(false);

@@ -64,7 +64,7 @@ function MainPage() {
       });
       setAwardedProjects(sortedProjects);
     } catch (error) {
-      console.error('데이터 로딩 실패:', error);
+      // Error silently handled
     } finally {
       setLoading(false);
     }

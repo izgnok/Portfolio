@@ -26,7 +26,6 @@ function AdminSkills() {
       const response = await skillsAPI.getAll();
       setSkills(response.data || []);
     } catch (error) {
-      console.error('Failed to load skills:', error);
       showMessage('error', 'Failed to load skills');
     } finally {
       setLoading(false);

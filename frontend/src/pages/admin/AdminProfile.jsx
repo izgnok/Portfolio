@@ -43,7 +43,6 @@ function AdminProfile() {
       reset(formData);
     } catch (error) {
       showMessage('error', 'Failed to load data: ' + error.message);
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -72,7 +71,6 @@ function AdminProfile() {
       loadData();
     } catch (error) {
       showMessage('error', 'Failed to save: ' + error.message);
-      console.error(error);
     } finally {
       setSaving(false);
     }
@@ -172,8 +170,6 @@ function AdminProfile() {
       await loadData();
       showMessage('success', 'Keyword order updated successfully!');
     } catch (error) {
-      console.error('Keyword order update error:', error);
-      
       if (error.response?.status === 401 || error.response?.status === 403) {
         showMessage('error', 'Authentication required. Please login again.');
       } else if (error.response?.status === 405) {

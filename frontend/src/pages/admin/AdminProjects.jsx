@@ -74,7 +74,6 @@ function AdminProjects() {
       const response = await projectsAPI.getAll();
       setProjects(response.data);
     } catch (error) {
-      console.error('Failed to load projects:', error);
     } finally {
       setLoading(false);
     }
@@ -93,7 +92,6 @@ function AdminProjects() {
           try {
             return JSON.parse(field);
           } catch (e) {
-            console.error('JSON 파싱 실패:', e);
             return [];
           }
         }
@@ -147,7 +145,6 @@ function AdminProjects() {
       setArchitectureImageFile(null);
 
     } catch (error) {
-      console.error('Failed to load project:', error);
       showMessage('error', 'Failed to load project.');
     }
   };
@@ -338,7 +335,6 @@ function AdminProjects() {
       
       await loadData();
     } catch (error) {
-      console.error('Failed to save project:', error);
       showMessage('error', 'Save failed: ' + (error.response?.data?.message || error.message));
     } finally {
       setSaving(false);

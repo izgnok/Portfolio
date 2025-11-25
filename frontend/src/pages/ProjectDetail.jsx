@@ -21,7 +21,7 @@ function ProjectDetail() {
       const response = await projectsAPI.getById(id);
       setProject(response.data);
     } catch (error) {
-      console.error('프로젝트 로딩 실패:', error);
+      // Error silently handled
     } finally {
       setLoading(false);
     }
@@ -34,7 +34,6 @@ function ProjectDetail() {
       try {
         return JSON.parse(field);
       } catch (e) {
-        console.error('JSON 파싱 실패:', e);
         return [];
       }
     }

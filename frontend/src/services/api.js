@@ -121,7 +121,7 @@ export const certificatesAPI = {
   // GET /api/certificates - List<CertificateResponse>
   getAll: () => api.get('/certificates'),
   
-  // POST /api/certificates - CertificateRequest {name, issuer, issueDate}
+  // POST /api/certificates - CertificateRequest {name, issuer, issueDate, certificateNumber}
   create: (data) => api.post('/certificates', data),
   
   // PUT /api/certificates/{id} - CertificateRequest

@@ -25,7 +25,6 @@ function AdminEducation() {
       const response = await educationsAPI.getAll();
       setEducations(response.data || []);
     } catch (error) {
-      console.error('Failed to load educations:', error);
       showMessage('error', 'Failed to load educations');
     } finally {
       setLoading(false);
