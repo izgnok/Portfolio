@@ -34,7 +34,6 @@ function AdminProjects() {
     mainFeatures: [],
     roles: [],
     problemSolutions: [],
-    achievements: [],
     regrets: [],
     improvements: [],
     // 기술스택 카테고리 (입력 시 한 줄에 하나씩)
@@ -115,7 +114,6 @@ function AdminProjects() {
         mainFeatures: parseJsonField(project.mainFeatures),
         roles: parseJsonField(project.roles),
         problemSolutions: parseJsonField(project.problemSolutions),
-        achievements: parseJsonField(project.achievements),
         regrets: parseJsonField(project.regrets),
         improvements: parseJsonField(project.improvements),
         techDatabase: parseJsonField(project.techDatabase),
@@ -167,7 +165,6 @@ function AdminProjects() {
       mainFeatures: [],
       roles: [],
       problemSolutions: [],
-      achievements: [],
       regrets: [],
       improvements: [],
       techDatabase: [],
@@ -298,7 +295,6 @@ function AdminProjects() {
         mainFeatures: JSON.stringify(formData.mainFeatures),
         roles: JSON.stringify(formData.roles),
         problemSolutions: JSON.stringify(formData.problemSolutions),
-        achievements: JSON.stringify(formData.achievements),
         regrets: JSON.stringify(formData.regrets),
         improvements: JSON.stringify(formData.improvements),
         techDatabase: JSON.stringify(formData.techDatabase),
@@ -767,44 +763,6 @@ function AdminProjects() {
                               type="button" 
                               className="btn-remove-pair" 
                               onClick={() => removeProblemSolution(index)}
-                              title="삭제"
-                            >
-                              ✕
-                            </button>
-                          </div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="form-group full-width">
-                    <div className="section-header-inline">
-                      <label>주요 성과</label>
-                      <button type="button" className="btn-add-small" onClick={() => addArrayItem('achievements')}>
-                        + 추가
-                      </button>
-                    </div>
-                    <p className="helper-text">프로젝트를 통해 달성한 주요 성과를 입력하세요</p>
-                    
-                    <div className="array-items-list">
-                      {formData.achievements.length === 0 ? (
-                        <div className="empty-state">
-                          <p>주요 성과가 없습니다. "추가" 버튼을 클릭하세요.</p>
-                        </div>
-                      ) : (
-                        formData.achievements.map((item, index) => (
-                          <div key={index} className="array-item">
-                            <span className="item-number">#{index + 1}</span>
-                            <input
-                              type="text"
-                              value={item}
-                              onChange={(e) => updateArrayItem('achievements', index, e.target.value)}
-                              placeholder="100명 이상 사용자 확보"
-                            />
-                            <button 
-                              type="button" 
-                              className="btn-delete" 
-                              onClick={() => removeArrayItem('achievements', index)}
                               title="삭제"
                             >
                               ✕

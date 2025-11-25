@@ -489,6 +489,11 @@
   gap: 30px;
 }
 
+/* 카드가 하나만 있을 때 전체 너비 차지 */
+.column-card:only-child {
+  grid-column: 1 / -1;
+}
+
 .column-card {
   background: white;
   border-radius: 20px;

@@ -82,7 +82,6 @@ function ProjectDetail() {
   const mainFeatures = parseJsonField(project.mainFeatures);
   const roles = parseJsonField(project.roles);
   const problemSolutions = parseJsonField(project.problemSolutions);
-  const achievements = parseJsonField(project.achievements);
   const regrets = parseJsonField(project.regrets);
   const improvements = parseJsonField(project.improvements);
   
@@ -246,51 +245,25 @@ function ProjectDetail() {
           </section>
         )}
 
-        {/* 성과 및 문제해결 */}
-        {(achievements.length > 0 || problemSolutions.length > 0) && (
-          <section className="achievements-problems-section fade-in">
-            <div className="two-column-grid">
-              {/* 좌측: 성과 */}
-              {achievements.length > 0 && (
-                <div className="column-card achievements-card">
-                  <div className="column-header">
-                    <div className="column-icon">🏆</div>
-                    <h3 className="column-title">성과</h3>
+        {/* 문제해결 */}
+        {problemSolutions.length > 0 && (
+          <section className="section-block fade-in">
+            <div className="section-card">
+              <h2 className="section-title">🔧 문제해결</h2>
+              <div className="problem-solution-items">
+                {problemSolutions.map((item, index) => (
+                  <div key={index} className="problem-solution-item">
+                    <div className="problem-part">
+                      <div className="item-badge error">문제</div>
+                      <p className="item-text">{item.problem}</p>
+                    </div>
+                    <div className="solution-part">
+                      <div className="item-badge success">해결</div>
+                      <p className="item-text">{item.solution}</p>
+                    </div>
                   </div>
-                  <div className="achievement-items">
-                    {achievements.map((achievement, index) => (
-                      <div key={index} className="achievement-item">
-                        <div className="item-badge success">성과</div>
-                        <p className="item-text">{achievement}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* 우측: 문제해결 */}
-              {problemSolutions.length > 0 && (
-                <div className="column-card problems-card">
-                  <div className="column-header">
-                    <div className="column-icon">🔧</div>
-                    <h3 className="column-title">문제해결</h3>
-                  </div>
-                  <div className="problem-solution-items">
-                    {problemSolutions.map((item, index) => (
-                      <div key={index} className="problem-solution-item">
-                        <div className="problem-part">
-                          <div className="item-badge error">문제</div>
-                          <p className="item-text">{item.problem}</p>
-                        </div>
-                        <div className="solution-part">
-                          <div className="item-badge success">해결</div>
-                          <p className="item-text">{item.solution}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+                ))}
+              </div>
             </div>
           </section>
         )}
