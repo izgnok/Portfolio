@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class KeywordService {
-    
+
     private final KeywordRepository keywordRepository;
-    
+
     /**
      * 키워드 목록 조회 (displayOrder 순)
      */
@@ -28,7 +28,7 @@ public class KeywordService {
                 .map(KeywordResponse::from)
                 .collect(Collectors.toList());
     }
-    
+
     /**
      * 키워드 저장
      */
@@ -38,11 +38,11 @@ public class KeywordService {
                 .keyword(request.getKeyword())
                 .displayOrder(request.getDisplayOrder())
                 .build();
-        
+
         Keyword saved = keywordRepository.save(keyword);
         return KeywordResponse.from(saved);
     }
-    
+
     /**
      * 키워드 삭제
      */
@@ -53,6 +53,7 @@ public class KeywordService {
         }
         keywordRepository.deleteById(id);
     }
+
     /**
      * 키워드 순서 일괄 변경
      */
@@ -66,4 +67,13 @@ public class KeywordService {
         }
     }
 
+    /**
+     * 키워드 수정
+     */
+    @Transactional
+    public void updateKeyword(Long id, String newKeyword) {
+        Keyword keyword = keywordRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("키워드를 찾을 수 없습니다"));
+        keyword.updateKeyword(newKeyword);
+    }
 }

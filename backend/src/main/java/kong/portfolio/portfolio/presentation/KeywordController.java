@@ -56,4 +56,15 @@ public class KeywordController {
         keywordService.deleteKeyword(id);
         return ResponseDto.response(StatusCode.SUCCESS, "키워드 삭제 완료");
     }
+
+    /**
+     * 키워드 수정
+     */
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDto> updateKeyword(
+            @PathVariable Long id,
+            @Valid @RequestBody KeywordRequest request) {
+        keywordService.updateKeyword(id, request.getKeyword());
+        return  ResponseDto.response(StatusCode.SUCCESS, "키워드 수정 완료");
+    }
 }

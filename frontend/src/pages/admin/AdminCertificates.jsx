@@ -40,8 +40,7 @@ function AdminCertificates() {
       name: '',
       issuer: '',
       issueDate: '',
-      expiryDate: '',
-      credentialId: ''
+      certificateNumber: ''
     });
     setShowModal(true);
   };
@@ -52,8 +51,7 @@ function AdminCertificates() {
       name: certificate.name,
       issuer: certificate.issuer,
       issueDate: certificate.issueDate,
-      expiryDate: certificate.expiryDate || '',
-      credentialId: certificate.credentialId || ''
+      certificateNumber: certificate.certificateNumber || ''
     });
     setShowModal(true);
   };
@@ -64,8 +62,7 @@ function AdminCertificates() {
         name: data.name,
         issuer: data.issuer,
         issueDate: data.issueDate,
-        expiryDate: data.expiryDate || null,
-        credentialId: data.credentialId || null
+        certificateNumber: data.certificateNumber || null
       };
 
       if (editingCertificate) {
@@ -98,11 +95,6 @@ function AdminCertificates() {
   const showMessage = (type, text) => {
     setMessage({ type, text });
     setTimeout(() => setMessage({ type: '', text: '' }), 3000);
-  };
-
-  const isExpired = (expiryDate) => {
-    if (!expiryDate) return false;
-    return new Date(expiryDate) < new Date();
   };
 
   if (loading) {
@@ -154,14 +146,8 @@ function AdminCertificates() {
                   <p className="issue-date">
                     Issued: {formatDate(cert.issueDate)}
                   </p>
-                  {cert.expiryDate && (
-                    <p className={`expiry-date ${isExpired(cert.expiryDate) ? 'expired' : ''}`}>
-                      Expires: {formatDate(cert.expiryDate)}
-                      {isExpired(cert.expiryDate) && ' (Expired)'}
-                    </p>
-                  )}
-                  {cert.credentialId && (
-                    <p className="credential-id">ID: {cert.credentialId}</p>
+                  {cert.certificateNumber && (
+                    <p className="certificate-number">Number: {cert.certificateNumber}</p>
                   )}
                   <div className="card-actions">
                     <button className="btn-edit" onClick={() => handleEdit(cert)}>
@@ -220,21 +206,12 @@ function AdminCertificates() {
                   {errors.issueDate && <span className="error-text">{errors.issueDate.message}</span>}
                 </div>
 
-                <div className="form-group">
-                  <label>Expiry Date (Optional)</label>
-                  <input
-                    type="date"
-                    {...register('expiryDate')}
-                  />
-                  <span className="input-hint">Leave empty if no expiration</span>
-                </div>
-
                 <div className="form-group full-width">
-                  <label>Credential ID (Optional)</label>
+                  <label>Certificate Number (Optional)</label>
                   <input
                     type="text"
-                    {...register('credentialId')}
-                    placeholder="ABC-123-XYZ"
+                    {...register('certificateNumber')}
+                    placeholder="ABC-123-XYZ-456"
                   />
                 </div>
 

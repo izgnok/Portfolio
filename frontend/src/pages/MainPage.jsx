@@ -185,6 +185,9 @@ function MainPage() {
                   <p className="card-date">
                     {formatDate(cert.issueDate)}
                   </p>
+                  {cert.certificateNumber && (
+                    <p className="card-cert-number">No. {cert.certificateNumber}</p>
+                  )}
                 </div>
               ))}
             </div>

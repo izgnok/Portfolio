@@ -12,7 +12,6 @@ function AdminProfile() {
   const [profile, setProfile] = useState(null);
   const [keywords, setKeywords] = useState([]);
   const [newKeyword, setNewKeyword] = useState('');
-  const [newKeywordOrder, setNewKeywordOrder] = useState(1);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [draggedKeyword, setDraggedKeyword] = useState(null);
@@ -98,12 +97,16 @@ function AdminProfile() {
     }
 
     try {
+      // 자동으로 마지막 순서 + 1로 설정
+      const maxOrder = keywords.length > 0 
+        ? Math.max(...keywords.map(k => k.displayOrder)) 
+        : 0;
+      
       await keywordsAPI.create({ 
         keyword: newKeyword, 
-        displayOrder: newKeywordOrder 
+        displayOrder: maxOrder + 1
       });
       setNewKeyword('');
-      setNewKeywordOrder(keywords.length + 2); // Next order
       loadData();
       showMessage('success', 'Keyword added successfully!');
     } catch (error) {
@@ -329,14 +332,6 @@ function AdminProfile() {
               onKeyPress={(e) => e.key === 'Enter' && addKeyword()}
               placeholder="Enter new keyword..."
               className="keyword-input"
-            />
-            <input
-              type="number"
-              value={newKeywordOrder}
-              onChange={(e) => setNewKeywordOrder(parseInt(e.target.value) || 1)}
-              placeholder="Order"
-              className="keyword-order-input"
-              min="1"
             />
             <button onClick={addKeyword} className="btn btn-add">
               ➕ Add

@@ -10,18 +10,22 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class Keyword {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false, length = 50)
     private String keyword;
-    
+
     @Column(nullable = false)
     private Integer displayOrder;  // 표시 순서
-    
+
     public void updateDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
+    }
+
+    public void updateKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }
