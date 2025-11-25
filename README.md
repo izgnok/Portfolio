@@ -16,7 +16,6 @@ AWS EC2에 Docker 컨테이너로 배포되며, GitHub Actions를 통한 자동 
 - Spring Security
 - Spring Data JPA
 - MySQL 8.0
-- JWT Authentication
 
 ### Frontend
 - React 18
