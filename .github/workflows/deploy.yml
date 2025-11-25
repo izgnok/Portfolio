@@ -124,12 +124,24 @@ jobs:
               mysql-data:
             EOF
 
-            # Docker 이미지 Pull & 컨테이너 재시작
-            docker-compose pull
+            # 기존 Backend 컨테이너 중지 및 삭제 (MySQL은 유지)
+            docker-compose stop backend
+            docker-compose rm -f backend
+
+            # 최신 이미지 Pull
+            docker-compose pull backend
+
+            # 컨테이너 재생성 및 시작
             docker-compose up -d
 
-            # 사용하지 않는 Docker 리소스 정리
-            docker system prune -af --volumes || true
+            # 오래된 이미지 정리
+            docker image prune -af
+
+            # 배포 상태 확인
+            echo "=== Container Status ==="
+            docker-compose ps
+            echo "=== Backend Logs (last 30 lines) ==="
+            docker logs --tail 30 portfolio-backend
 
       # 9. Frontend 파일 EC2로 전송
       - name: Deploy Frontend to EC2
