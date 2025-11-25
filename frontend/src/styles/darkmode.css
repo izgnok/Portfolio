@@ -1,0 +1,345 @@
+/* ============================================ */
+/* 다크모드 전역 스타일 */
+/* ============================================ */
+
+/* 다크모드 CSS 변수 */
+body.dark-mode {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-card: #1e293b;
+  --bg-hover: #334155;
+  
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  --border-color: #334155;
+  --shadow: rgba(0, 0, 0, 0.5);
+  
+  --gradient-start: #667eea;
+  --gradient-end: #764ba2;
+}
+
+/* 기본 배경 */
+body.dark-mode {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* 컨테이너 */
+body.dark-mode .container {
+  background: transparent;
+}
+
+/* 카드 스타일 */
+body.dark-mode .card,
+body.dark-mode .section-card,
+body.dark-mode .project-card,
+body.dark-mode .skill-card,
+body.dark-mode .education-card,
+body.dark-mode .certificate-card,
+body.dark-mode .column-card {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 5px 20px var(--shadow);
+}
+
+/* 제목 */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+  color: var(--text-primary);
+}
+
+/* 부제목 */
+body.dark-mode .subtitle,
+body.dark-mode .page-subtitle,
+body.dark-mode .admin-subtitle,
+body.dark-mode p {
+  color: var(--text-secondary);
+}
+
+/* 입력 필드 */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: var(--text-muted);
+}
+
+body.dark-mode input:focus,
+body.dark-mode textarea:focus,
+body.dark-mode select:focus {
+  background: var(--bg-hover);
+  border-color: var(--gradient-start);
+}
+
+/* 네비게이션 */
+body.dark-mode .nav {
+  background: var(--bg-secondary);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+body.dark-mode .nav a {
+  color: var(--text-primary);
+}
+
+body.dark-mode .nav a:hover {
+  color: var(--gradient-start);
+}
+
+/* 버튼 (그라데이션 버튼은 그대로 유지) */
+body.dark-mode .btn-add,
+body.dark-mode .btn-submit,
+body.dark-mode .btn-login {
+  /* 그라데이션 버튼은 변경 없음 */
+}
+
+/* 섹션 구분선 */
+body.dark-mode .section-divider {
+  border-color: var(--border-color);
+}
+
+/* 테이블 */
+body.dark-mode table {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+body.dark-mode thead {
+  background: var(--bg-secondary);
+}
+
+body.dark-mode tbody tr:hover {
+  background: var(--bg-hover);
+}
+
+/* 모달 */
+body.dark-mode .modal-overlay {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .modal-container {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* 메시지 */
+body.dark-mode .message.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  border-left-color: #22c55e;
+}
+
+body.dark-mode .message.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border-left-color: #ef4444;
+}
+
+/* 프로젝트 아이템 */
+body.dark-mode .project-item {
+  background: var(--bg-card);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .project-item:hover {
+  background: var(--bg-hover);
+}
+
+body.dark-mode .project-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* 스킬 레벨 바 */
+body.dark-mode .level-bar {
+  background: var(--bg-secondary);
+}
+
+/* 뱃지 */
+body.dark-mode .badge,
+body.dark-mode .award-badge,
+body.dark-mode .status-badge {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+/* 빈 상태 */
+body.dark-mode .empty-state,
+body.dark-mode .no-data {
+  color: var(--text-muted);
+}
+
+/* 링크 */
+body.dark-mode a {
+  color: var(--gradient-start);
+}
+
+body.dark-mode a:hover {
+  color: var(--gradient-end);
+}
+
+/* 아이템 뱃지 (성과, 문제, 해결 등) */
+body.dark-mode .item-badge.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+body.dark-mode .item-badge.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+body.dark-mode .item-badge.warning {
+  background: rgba(251, 191, 36, 0.2);
+  color: #fde047;
+}
+
+body.dark-mode .item-badge.info {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+}
+
+/* 탭 */
+body.dark-mode .tab {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .tab.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+/* 폼 그룹 */
+body.dark-mode .form-group label {
+  color: var(--text-primary);
+}
+
+body.dark-mode .helper-text {
+  color: var(--text-muted);
+}
+
+/* 배열 아이템 */
+body.dark-mode .array-item {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .item-number {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+/* 이미지 미리보기 */
+body.dark-mode .image-preview-container {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+/* 통계 카드 */
+body.dark-mode .stat-card {
+  background: var(--bg-card);
+  color: var(--text-primary);
+}
+
+/* 스크롤바 (Webkit 브라우저) */
+body.dark-mode ::-webkit-scrollbar {
+  background: var(--bg-secondary);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--bg-hover);
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color);
+}
+
+/* 이미지 갤러리 네비게이션 */
+body.dark-mode .gallery-nav button {
+  background: rgba(30, 41, 59, 0.8);
+  color: var(--text-primary);
+}
+
+body.dark-mode .gallery-nav button:hover {
+  background: rgba(51, 65, 85, 0.9);
+}
+
+/* 기술스택 태그 */
+body.dark-mode .tech-tag {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* 로딩 스피너 */
+body.dark-mode .loading-spinner {
+  border-color: var(--border-color);
+  border-top-color: var(--gradient-start);
+}
+
+/* 호버 효과 유지 */
+body.dark-mode .card:hover,
+body.dark-mode .section-card:hover,
+body.dark-mode .project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
+/* 관리자 헤더 */
+body.dark-mode .admin-header {
+  color: var(--text-primary);
+}
+
+body.dark-mode .admin-title {
+  color: var(--text-primary);
+}
+
+/* 섹션 헤더 */
+body.dark-mode .section-header h2,
+body.dark-mode .section-title {
+  color: var(--text-primary);
+}
+
+/* 프로젝트 리스트 */
+body.dark-mode .projects-list {
+  background: var(--bg-card);
+}
+
+/* 키워드 */
+body.dark-mode .keyword-tag {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* 자격증 번호 */
+body.dark-mode .certificate-number,
+body.dark-mode .card-cert-number {
+  color: var(--text-muted);
+}
+
+/* GPA, 날짜 등 작은 텍스트 */
+body.dark-mode .card-date,
+body.dark-mode .education-date,
+body.dark-mode .education-gpa,
+body.dark-mode .issue-date {
+  color: var(--text-secondary);
+}
+
+/* 상태 표시 */
+body.dark-mode .education-status,
+body.dark-mode .project-status {
+  color: var(--text-secondary);
+}

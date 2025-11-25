@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useCallback } from 'react';
 import LoginModal from './LoginModal';
+import ThemeToggle from './ThemeToggle';
 import { authAPI } from '../services/api';
 import './Navigation.css';
 
@@ -80,6 +81,8 @@ function Navigation({ isAdmin = false }) {
         onClose={() => setShowLoginModal(false)}
         onLogin={handleLogin}
       />
+      
+      <ThemeToggle />
     </>
   );
 }
