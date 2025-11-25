@@ -68,8 +68,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # 작업 디렉토리 생성
-            mkdir -p /home/ubuntu/portfolio
             cd /home/ubuntu/portfolio
 
             # .env 파일 생성
@@ -124,23 +122,23 @@ jobs:
               mysql-data:
             EOF
 
-            # 기존 Backend 컨테이너 중지 및 삭제 (MySQL은 유지)
-            docker-compose stop backend
-            docker-compose rm -f backend
+            # Backend 컨테이너 중지 및 삭제
+            docker compose stop backend
+            docker compose rm -f backend
 
             # 최신 이미지 Pull
-            docker-compose pull backend
+            docker compose pull backend
 
-            # 컨테이너 재생성 및 시작
-            docker-compose up -d
+            # 컨테이너 재시작
+            docker compose up -d backend
 
             # 오래된 이미지 정리
             docker image prune -af
 
             # 배포 상태 확인
-            echo "=== Container Status ==="
-            docker-compose ps
-            echo "=== Backend Logs (last 30 lines) ==="
+            echo "=== Deployment Complete ==="
+            docker ps
+            echo "=== Backend Logs ==="
             docker logs --tail 30 portfolio-backend
 
       # 9. Frontend 파일 EC2로 전송
