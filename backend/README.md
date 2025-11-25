@@ -142,11 +142,8 @@ POST   /api/upload         # 파일 업로드 (최대 10MB)
 CREATE TABLE users (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) UNIQUE NOT NULL,
-    email VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(20) DEFAULT 'USER',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 ```
 
@@ -188,10 +185,6 @@ CREATE TABLE profile (
 
 ## 🔒 보안
 
-### JWT 인증
-- Access Token: 24시간 유효
-- 헤더: `Authorization: Bearer <token>`
-- 모든 API는 인증 필요 (로그인/회원가입 제외)
 
 ### Spring Security 설정
 ```java
