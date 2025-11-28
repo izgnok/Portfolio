@@ -11,57 +11,61 @@ import AdminEducation from './pages/admin/AdminEducation';
 import AdminCertificates from './pages/admin/AdminCertificates';
 import { usePageTracking } from './hooks/usePageTracking';
 
-
-function App() {
-  // Google Analytics 페이지뷰 자동 추적
+// Router 내부에서 usePageTracking 사용
+function AppRoutes() {
   usePageTracking();
 
   return (
-    <Router>
-      <Routes>
-        {/* 방문자 페이지 */}
-        <Route path="/" element={<MainPage />} />
-        <Route path="/projects" element={<ProjectsList />} />
-        <Route path="/projects/:id" element={<ProjectDetail />} />
-        
-        {/* 관리자 페이지 (보호됨) */}
-        <Route path="/admin" element={
-          <ProtectedRoute>
-            <AdminDashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/profile" element={
-          <ProtectedRoute>
-            <AdminProfile />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/projects" element={
-          <ProtectedRoute>
-            <AdminProjects />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/projects/:id" element={
-          <ProtectedRoute>
-            <AdminProjects />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/skills" element={
-          <ProtectedRoute>
-            <AdminSkills />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/education" element={
-          <ProtectedRoute>
-            <AdminEducation />
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/certificates" element={
-          <ProtectedRoute>
-            <AdminCertificates />
-          </ProtectedRoute>
-        } />
+    <Routes>
+      {/* 방문자 페이지 */}
+      <Route path="/" element={<MainPage />} />
+      <Route path="/projects" element={<ProjectsList />} />
+      <Route path="/projects/:id" element={<ProjectDetail />} />
+      
+      {/* 관리자 페이지 (보호됨) */}
+      <Route path="/admin" element={
+        <ProtectedRoute>
+          <AdminDashboard />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/profile" element={
+        <ProtectedRoute>
+          <AdminProfile />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/projects" element={
+        <ProtectedRoute>
+          <AdminProjects />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/projects/:id" element={
+        <ProtectedRoute>
+          <AdminProjects />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/skills" element={
+        <ProtectedRoute>
+          <AdminSkills />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/education" element={
+        <ProtectedRoute>
+          <AdminEducation />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin/certificates" element={
+        <ProtectedRoute>
+          <AdminCertificates />
+        </ProtectedRoute>
+      } />
+    </Routes>
+  );
+}
 
-      </Routes>
+function App() {
+  return (
+    <Router>
+      <AppRoutes />
     </Router>
   );
 }
