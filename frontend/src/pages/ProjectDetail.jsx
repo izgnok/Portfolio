@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation';
 import Loading from '../components/Loading';
 import { projectsAPI } from '../services/api';
 import { formatDate } from '../utils/dateFormat';
+import { trackProjectView, trackOutboundLink } from '../utils/analytics';
 import './ProjectDetail.css';
 
 function ProjectDetail() {
@@ -20,6 +21,11 @@ function ProjectDetail() {
     try {
       const response = await projectsAPI.getById(id);
       setProject(response.data);
+      
+      // Google Analytics: 프로젝트 상세 조회 추적
+      if (response.data) {
+        trackProjectView(id, response.data.name || response.data.title);
+      }
     } catch (error) {
       // Error silently handled
     } finally {
@@ -181,7 +187,13 @@ function ProjectDetail() {
             {project.githubUrl && (
               <div className="info-card">
                 <h3>💻 GitHub</h3>
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
+                <a 
+                  href={project.githubUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="project-link"
+                  onClick={() => trackOutboundLink(project.githubUrl, `Project ${project.name} GitHub`)}
+                >
                   {project.githubUrl}
                 </a>
               </div>

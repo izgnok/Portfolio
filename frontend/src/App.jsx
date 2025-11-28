@@ -9,9 +9,13 @@ import AdminProjects from './pages/admin/AdminProjects';
 import AdminSkills from './pages/admin/AdminSkills';
 import AdminEducation from './pages/admin/AdminEducation';
 import AdminCertificates from './pages/admin/AdminCertificates';
+import { usePageTracking } from './hooks/usePageTracking';
 
 
 function App() {
+  // Google Analytics 페이지뷰 자동 추적
+  usePageTracking();
+
   return (
     <Router>
       <Routes>

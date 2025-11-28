@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { authAPI } from '../services/api';
+import { trackLogin } from '../utils/analytics';
 import './LoginModal.css';
 
 function LoginModal({ isOpen, onClose, onLogin }) {
@@ -31,13 +32,20 @@ function LoginModal({ isOpen, onClose, onLogin }) {
         localStorage.setItem('isAdmin', 'true');
         localStorage.setItem('userInfo', JSON.stringify(response.data));
         
+        // Google Analytics: 로그인 성공 추적
+        trackLogin(true);
+        
         onLogin();
         onClose();
       } else {
         setError('로그인에 실패했습니다. 응답 데이터가 없습니다.');
+        trackLogin(false);
       }
     } catch (err) {
       setError(err.message || '아이디 또는 비밀번호가 올바르지 않습니다.');
+      
+      // Google Analytics: 로그인 실패 추적
+      trackLogin(false);
     } finally {
       setLoading(false);
     }

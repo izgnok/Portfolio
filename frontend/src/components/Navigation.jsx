@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 import LoginModal from './LoginModal';
 import ThemeToggle from './ThemeToggle';
 import { authAPI } from '../services/api';
+import { trackLogout } from '../utils/analytics';
 import './Navigation.css';
 
 function Navigation({ isAdmin = false }) {
@@ -40,6 +41,9 @@ function Navigation({ isAdmin = false }) {
       } catch (error) {
         // Logout error handled silently
       } finally {
+        // Google Analytics: 로그아웃 추적
+        trackLogout();
+        
         // 로컬 스토리지 정리
         localStorage.removeItem('isAdmin');
         localStorage.removeItem('userInfo');
